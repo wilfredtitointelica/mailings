@@ -1,0 +1,752 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flujo de Mailings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: menú lateral fijo de 280px + columna de lectura de 820px. En pantallas angostas el menú pasa a un panel deslizable. Paleta tomada de los mailings Incontrol. */
+:root {
+	--bg: #fbfbfd;
+	--side: #f4f5f9;
+	--surface: #f2f2f5;
+	--card: #ffffff;
+	--line: #e3e5ee;
+	--fg: #0a1733;
+	--muted: #5a6582;
+	--soft: #8a94ab;
+	--brand: #1b3e88;
+	--accent: #fa573e;
+	--accent-soft: #fff1ec;
+	--brand-soft: #eef2fc;
+	--code-bg: #0a1733;
+	--code-fg: #e8ecf7;
+	--shadow: 0 1px 2px rgba(10, 23, 51, .04), 0 8px 28px rgba(10, 23, 51, .06);
+	--font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+	--font-body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+	--font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+	--side-w: 280px;
+}
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]) {
+		--bg: #0b1222; --side: #0e1628; --surface: #131c32; --card: #141e36; --line: #243150;
+		--fg: #e8ecf7; --muted: #a2adc8; --soft: #7584a6; --brand: #93b2ff; --accent: #ff7a63;
+		--accent-soft: #2a1a1b; --brand-soft: #16244a; --code-bg: #060b17; --code-fg: #e8ecf7;
+		--shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 28px rgba(0, 0, 0, .25);
+		color-scheme: dark;
+	}
+}
+:root[data-theme="dark"] {
+	--bg: #0b1222; --side: #0e1628; --surface: #131c32; --card: #141e36; --line: #243150;
+	--fg: #e8ecf7; --muted: #a2adc8; --soft: #7584a6; --brand: #93b2ff; --accent: #ff7a63;
+	--accent-soft: #2a1a1b; --brand-soft: #16244a; --code-bg: #060b17; --code-fg: #e8ecf7;
+	--shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 28px rgba(0, 0, 0, .25);
+	color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+	margin: 0;
+	background: var(--bg);
+	color: var(--fg);
+	font-family: var(--font-body);
+	font-size: 16px;
+	line-height: 1.7;
+	-webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.12; }
+h1 { font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 800; letter-spacing: -0.03em; }
+h2 { font-size: clamp(1.7rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em; }
+h3 { font-size: 1.15rem; font-weight: 700; }
+p { margin: 0; max-width: 82ch; }
+a { color: var(--brand); }
+code, .mono { font-family: var(--font-mono); font-size: 0.86em; }
+/* sin ligaduras: "-<" o "->" no deben verse como flechas en rutas */
+code, pre, .mono, .tree, .io, .chip, .skill-name, .toc a, .station .folder, .ex-step .what, .ex-step .out, .url span { font-variant-ligatures: none; }
+:not(pre) > code {
+	background: var(--surface);
+	border: 1px solid var(--line);
+	border-radius: 6px;
+	padding: 1px 6px;
+	white-space: nowrap;
+}
+strong { font-weight: 600; }
+ul, ol { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; }
+li { max-width: 78ch; }
+li::marker { color: var(--soft); }
+
+/* ---------- menú lateral ---------- */
+.side {
+	position: fixed; inset: 0 auto 0 0; width: var(--side-w); z-index: 30;
+	background: var(--side); border-right: 1px solid var(--line);
+	display: flex; flex-direction: column;
+	padding: 28px 18px 18px;
+}
+.brand { display: flex; align-items: center; gap: 12px; padding: 0 10px 26px; text-decoration: none; color: var(--fg); }
+.brand .logo {
+	width: 38px; height: 38px; border-radius: 11px; flex: none;
+	background: linear-gradient(135deg, var(--accent), #ff9a6b);
+	display: grid; place-items: center; color: #fff;
+	font: 800 1.05rem var(--font-display);
+	box-shadow: 0 6px 16px rgba(250, 87, 62, .3);
+}
+.brand b { display: block; font: 700 1.05rem/1.2 var(--font-display); }
+.brand small { color: var(--soft); font-size: .78rem; }
+nav.toc { flex: 1; overflow-y: auto; padding-right: 4px; scrollbar-width: thin; }
+.toc .group { margin-bottom: 22px; }
+.toc .group-title { font: 600 .7rem var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--soft); padding: 0 10px 8px; }
+.toc a {
+	position: relative; display: flex; align-items: center; gap: 10px;
+	padding: 7px 10px; border-radius: 9px; margin-bottom: 2px;
+	color: var(--muted); text-decoration: none; font-size: .93rem; line-height: 1.35;
+	transition: background .2s, color .2s;
+}
+.toc a:hover { background: var(--card); color: var(--fg); }
+.toc a .n { font: 500 .72rem var(--font-mono); color: var(--soft); width: 18px; flex: none; }
+.toc a.skill-link { font-family: var(--font-mono); font-size: .84rem; }
+.toc a.on { background: var(--card); color: var(--brand); font-weight: 600; box-shadow: var(--shadow); }
+.toc a.on::before { content: ""; position: absolute; left: -18px; top: 8px; bottom: 8px; width: 3px; border-radius: 0 3px 3px 0; background: var(--accent); }
+.toc a.on .n { color: var(--accent); }
+.side-foot { border-top: 1px solid var(--line); padding: 14px 10px 0; display: flex; align-items: center; justify-content: space-between; gap: 10px; color: var(--soft); font-size: .8rem; }
+.theme {
+	border: 1px solid var(--line); background: var(--card); color: var(--muted);
+	border-radius: 999px; padding: 5px 12px; cursor: pointer; font: 500 .78rem var(--font-body);
+}
+.theme:hover { color: var(--fg); }
+
+/* barra superior en móvil */
+.topbar { display: none; }
+
+/* ---------- contenido ---------- */
+main { margin-left: var(--side-w); }
+.content { max-width: 1160px; margin: 0 auto; padding: 72px 72px 120px; }
+section { scroll-margin-top: 40px; padding: 0 0 112px; display: grid; gap: 22px; min-width: 0; }
+section + section { border-top: 1px solid var(--line); padding-top: 96px; }
+.eyebrow { font: 500 .75rem var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+.head { display: grid; gap: 12px; margin-bottom: 10px; }
+.lede { color: var(--muted); font-size: 1.15rem; line-height: 1.65; }
+.note { color: var(--muted); font-size: .93rem; }
+
+/* portada */
+.hero { gap: 26px; padding-bottom: 96px; }
+.hero h1 span { background: linear-gradient(120deg, var(--accent), #ff9a6b); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+	display: inline-flex; align-items: center; gap: 7px;
+	font: 500 .78rem var(--font-mono); padding: 6px 12px; border-radius: 999px;
+	background: var(--card); border: 1px solid var(--line); color: var(--muted);
+}
+.chip i { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+.quick { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 10px; }
+.quick a {
+	display: grid; gap: 8px; padding: 20px; border-radius: 16px; text-decoration: none; color: var(--fg);
+	background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow);
+	transition: transform .25s, border-color .25s;
+}
+.quick a:hover { transform: translateY(-3px); border-color: var(--accent); }
+.quick .step { font: 600 .72rem var(--font-mono); color: var(--accent); letter-spacing: .08em; }
+.quick .cmdname { font: 500 .98rem var(--font-mono); color: var(--brand); }
+.quick p { color: var(--muted); font-size: .9rem; line-height: 1.5; }
+
+/* árbol de carpetas */
+.tree {
+	padding: 22px 28px; border-radius: 16px;
+	background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow);
+	font: .88rem var(--font-mono); color: var(--muted);
+}
+.tree .row { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 32px; align-items: baseline; padding: 7px 0; }
+.tree .row + .row { border-top: 1px dashed color-mix(in srgb, var(--line) 70%, transparent); }
+.tree .row.sep { margin-top: 10px; border-top: 1px solid var(--line); padding-top: 16px; }
+.tree .name { display: flex; align-items: baseline; gap: 10px; white-space: nowrap; }
+.tree i { font-style: normal; color: var(--soft); }
+.tree b { color: var(--brand); font-weight: 500; }
+.tree em { color: var(--accent); font-style: normal; font-weight: 500; }
+.tree small { font: 500 .72rem var(--font-mono); color: var(--soft); background: var(--surface); border-radius: 6px; padding: 2px 7px; }
+.tree .desc { color: var(--soft); line-height: 1.5; }
+.tree .root .desc { font-style: italic; }
+
+/* URL armada por partes */
+.url { display: flex; flex-wrap: wrap; align-items: stretch; gap: 6px; }
+.url span { display: grid; gap: 2px; padding: 10px 14px; border-radius: 12px; font: .82rem var(--font-mono); overflow-wrap: anywhere; min-width: 0; }
+.url small { font: 600 .65rem var(--font-body); letter-spacing: .08em; text-transform: uppercase; opacity: .75; }
+.url .a { background: var(--surface); color: var(--muted); flex: 1 1 320px; }
+.url .b { background: var(--accent-soft); color: var(--accent); }
+.url .p { background: var(--brand-soft); color: var(--brand); }
+.url .plus { align-self: center; color: var(--soft); font: 600 1rem var(--font-mono); padding: 0 2px; }
+
+/* vía del flujo: una tarjeta por etapa, cada una con su color */
+.track { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 36px; margin: 26px 0 12px; }
+.station {
+	--c: var(--accent);
+	position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 14px;
+	padding: 26px 22px 24px; border-radius: 18px;
+	background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow);
+	transition: transform .3s, box-shadow .3s;
+}
+.station:hover { transform: translateY(-4px); }
+.station::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 5px; border-radius: 18px 18px 0 0; background: var(--c); }
+.station:not(:last-child)::after {
+	content: "→"; position: absolute; right: -28px; top: 44px;
+	font: 700 1.2rem var(--font-display); color: var(--soft);
+}
+.st1 { --c: #fa573e; } .st2 { --c: #3d6ee0; } .st3 { --c: #8e6cef; } .st4 { --c: #22a06b; }
+.station .dot {
+	width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center;
+	font: 800 1.25rem var(--font-display); color: var(--c);
+	background: color-mix(in srgb, var(--c) 13%, transparent);
+}
+.station .folder { font: 600 .92rem/1.3 var(--font-mono); color: var(--fg); overflow-wrap: anywhere; }
+.station .langs { display: block; margin-top: 4px; font: 500 .74rem var(--font-mono); color: var(--soft); }
+.station .who { font-size: .9rem; color: var(--muted); line-height: 1.55; flex: 1; }
+.station .skill { font: 500 .78rem var(--font-mono); color: var(--c); background: color-mix(in srgb, var(--c) 11%, transparent); padding: 5px 10px; border-radius: 8px; }
+.station .skill.human { font-family: var(--font-body); font-style: italic; }
+.callout {
+	display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start;
+	background: var(--brand-soft); border-radius: 16px; padding: 20px 22px;
+}
+.callout .mark { font: 700 1.4rem/1 var(--font-display); color: var(--brand); }
+
+/* tablas */
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; background: var(--card); box-shadow: var(--shadow); }
+table { width: 100%; border-collapse: collapse; font-size: .94rem; }
+th, td { text-align: left; padding: 15px 18px; vertical-align: top; border-bottom: 1px solid var(--line); }
+th { font: 600 .72rem var(--font-body); letter-spacing: .07em; text-transform: uppercase; color: var(--soft); background: var(--surface); }
+tr:last-child td { border-bottom: 0; }
+td:first-child { white-space: nowrap; }
+td .mono { color: var(--brand); font-weight: 500; }
+tbody tr { transition: background .2s; }
+tbody tr:hover { background: var(--surface); }
+
+/* skills */
+.skills { display: grid; gap: 28px; }
+.skill-card {
+	scroll-margin-top: 40px;
+	background: var(--card); border: 1px solid var(--line); border-radius: 20px;
+	padding: 28px 30px; display: grid; gap: 20px; min-width: 0; box-shadow: var(--shadow);
+}
+.skill-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; padding-bottom: 18px; border-bottom: 1px dashed var(--line); }
+.skill-name { font: 500 1.2rem var(--font-mono); color: var(--brand); }
+.tag { font: 600 .68rem var(--font-body); letter-spacing: .08em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px; background: var(--surface); color: var(--muted); margin-left: 8px; vertical-align: middle; }
+.tag.main { background: var(--accent-soft); color: var(--accent); }
+.io { font: .8rem var(--font-mono); color: var(--muted); }
+.io b { color: var(--accent); font-weight: 500; }
+.cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: 28px; }
+.label { font: 600 .72rem var(--font-body); letter-spacing: .07em; text-transform: uppercase; color: var(--soft); margin-bottom: 10px; }
+
+/* comandos */
+.cmd { position: relative; background: var(--code-bg); color: var(--code-fg); border-radius: 12px; min-width: 0; }
+.cmd pre { margin: 0; padding: 16px 96px 16px 18px; overflow-x: auto; font: .84rem/1.7 var(--font-mono); }
+.cmd .copy {
+	position: absolute; top: 10px; right: 10px;
+	font: 500 .75rem var(--font-body); color: var(--code-fg);
+	background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .18);
+	border-radius: 7px; padding: 5px 11px; cursor: pointer; transition: background .15s;
+}
+.cmd .copy:hover { background: rgba(255, 255, 255, .18); }
+.cmd .c { color: #8fa0c4; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* reglas */
+.rules { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.rule { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px 24px; display: grid; gap: 8px; align-content: start; position: relative; overflow: hidden; }
+.rule::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--accent); }
+.rule h3 { font-size: 1.02rem; }
+.rule p { font-size: .94rem; color: var(--muted); }
+
+/* ejemplo */
+.example { display: grid; border-left: 2px solid var(--line); margin-left: 8px; }
+.ex-step { display: grid; grid-template-columns: minmax(0, 240px) minmax(0, 1fr); gap: 4px 24px; padding: 16px 0 16px 26px; position: relative; }
+.ex-step::before { content: ""; position: absolute; left: -8px; top: 23px; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); border: 3px solid var(--bg); }
+.ex-step.manual::before { background: var(--soft); }
+.ex-step .what { font: 500 .9rem var(--font-mono); color: var(--brand); }
+.ex-step.manual .what { color: var(--muted); font-family: var(--font-body); font-style: italic; }
+.ex-step .out { font: .84rem var(--font-mono); color: var(--fg); overflow-wrap: anywhere; }
+
+footer { color: var(--soft); font-size: .85rem; padding-top: 32px; border-top: 1px solid var(--line); }
+
+/* aparición suave al hacer scroll */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1100px) { .content { padding: 64px 40px 100px; } }
+@media (max-width: 960px) {
+	.side { transform: translateX(-100%); transition: transform .3s ease; box-shadow: var(--shadow); }
+	body.menu .side { transform: none; }
+	.scrim { position: fixed; inset: 0; background: rgba(10, 23, 51, .35); z-index: 25; opacity: 0; pointer-events: none; transition: opacity .3s; }
+	body.menu .scrim { opacity: 1; pointer-events: auto; }
+	.topbar {
+		display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 20;
+		height: 56px; padding: 0 16px; background: color-mix(in srgb, var(--bg) 88%, transparent);
+		backdrop-filter: blur(12px); border-bottom: 1px solid var(--line);
+	}
+	.topbar button { border: 1px solid var(--line); background: var(--card); color: var(--fg); border-radius: 9px; padding: 6px 12px; font: 500 .85rem var(--font-body); cursor: pointer; }
+	.topbar .where { font: 600 .9rem var(--font-display); color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+	main { margin-left: 0; }
+	.content { padding: 40px 16px 80px; }
+	section { scroll-margin-top: 72px; padding-bottom: 72px; }
+	section + section { padding-top: 64px; }
+	.skill-card { scroll-margin-top: 72px; padding: 22px 18px; }
+	.quick, .rules, .cols { grid-template-columns: 1fr; }
+	:not(pre) > code { white-space: normal; overflow-wrap: anywhere; }
+	.tree { padding: 16px 18px; }
+	.tree .row { grid-template-columns: 1fr; gap: 2px; }
+	.tree .desc { padding-left: 28px; font-size: .8rem; }
+	.track { grid-template-columns: 1fr; gap: 30px; }
+	.station:not(:last-child)::after { content: "↓"; right: auto; left: 50%; top: auto; bottom: -27px; }
+	.ex-step { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+	html { scroll-behavior: auto; }
+	*, *::before { transition: none !important; }
+	.reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<aside class="side" aria-label="Contenido">
+	<a class="brand" href="#inicio">
+		<span class="logo">M</span>
+		<span><b>Flujo de Mailings</b><small>new-mailings · Claude Code</small></span>
+	</a>
+	<nav class="toc">
+		<div class="group">
+			<div class="group-title">Empezar</div>
+			<a href="#inicio"><span class="n">01</span>Inicio</a>
+			<a href="#proyectos"><span class="n">02</span>Proyectos</a>
+			<a href="#flujo"><span class="n">03</span>El recorrido</a>
+			<a href="#carpetas"><span class="n">04</span>Carpetas</a>
+		</div>
+		<div class="group">
+			<div class="group-title">Skills</div>
+			<a href="#sk-maquetar" class="skill-link"><span class="n">1</span>/maquetar-figma</a>
+			<a href="#sk-entregar" class="skill-link"><span class="n">2</span>/entregar-dev</a>
+			<a href="#sk-publicar" class="skill-link"><span class="n">3</span>/publicar-ambientes</a>
+			<a href="#sk-optimizar" class="skill-link"><span class="n">+</span>/optimizar-imagenes</a>
+			<a href="#sk-observaciones" class="skill-link"><span class="n">+</span>/observaciones-html</a>
+		</div>
+		<div class="group">
+			<div class="group-title">Referencia</div>
+			<a href="#reglas"><span class="n">05</span>Manda Figma</a>
+			<a href="#ambientes"><span class="n">06</span>URLs por ambiente</a>
+			<a href="#ejemplo"><span class="n">07</span>Ejemplo completo</a>
+			<a href="#refs"><span class="n">08</span>Agregar referencias</a>
+			<a href="#problemas"><span class="n">09</span>Problemas comunes</a>
+		</div>
+	</nav>
+	<div class="side-foot">
+		<span>README.md tiene el detalle</span>
+		<button class="theme" type="button" id="theme">Tema</button>
+	</div>
+</aside>
+<div class="scrim" id="scrim"></div>
+
+<main>
+	<div class="topbar">
+		<button type="button" id="open-menu" aria-label="Abrir menú">☰ Menú</button>
+		<span class="where" id="where">Inicio</span>
+	</div>
+
+	<div class="content">
+
+		<section id="inicio" class="hero" aria-labelledby="t-inicio">
+			<span class="eyebrow">new-mailings · Claude Code</span>
+			<h1 id="t-inicio">Flujo de <span>Mailings</span></h1>
+			<p class="lede">Cómo pasamos dos diseños de Figma (inglés y español) a correos HTML listos para cada ambiente. Cada módulo es un proyecto, hay una carpeta por etapa y una subcarpeta por idioma, y todo se mueve con tres skills.</p>
+			<div class="chips">
+				<span class="chip"><i></i>Node + <code>npm install</code></span>
+				<span class="chip"><i></i>MCP de Figma conectado</span>
+				<span class="chip"><i></i>Microsoft Edge</span>
+				<span class="chip"><i></i>Imágenes <code>.png</code> / <code>.jpg</code></span>
+			</div>
+			<div class="quick">
+				<a href="#sk-maquetar"><span class="step">PASO 1</span><span class="cmdname">/maquetar-figma</span><p>Figma EN + ES → maqueta por idioma e imágenes .png/.jpg.</p></a>
+				<a href="#sk-entregar"><span class="step">PASO 2</span><span class="cmdname">/entregar-dev</span><p>HTML con URLs de PRD para el desarrollador.</p></a>
+				<a href="#sk-publicar"><span class="step">PASO 3</span><span class="cmdname">/publicar-ambientes</span><p>Una versión por ambiente (dev, qa, prd) e idioma.</p></a>
+			</div>
+		</section>
+
+		<section id="proyectos" aria-labelledby="t-proyectos">
+			<div class="head reveal">
+				<span class="eyebrow">Organización</span>
+				<h2 id="t-proyectos">Un proyecto por módulo</h2>
+			</div>
+			<p class="reveal">Cada maquetador recibe un Figma con los mailings de un módulo, por ejemplo alerts. Cada módulo es un <strong>proyecto</strong>: una carpeta <code>mailings-&lt;nombre&gt;/</code> en la raíz del repositorio. <code>/maquetar-figma</code> pregunta el proyecto: si la carpeta existe, trabaja ahí mismo; si no, la crea con todas sus subcarpetas.</p>
+<div class="tree reveal" role="list" aria-label="Estructura de carpetas">
+				<div class="row root" role="listitem"><span class="name"><b>mailings-alerts/</b></span><span class="desc">un proyecto = un módulo</span></div>
+				<div class="row" role="listitem"><span class="name"><i>├─</i><em>proyecto.json</em></span><span class="desc">{ "nombre": "alerts", "carpetaImagenes": "alerts/" }</span></div>
+				<div class="row" role="listitem"><span class="name"><i>├─</i><b>1_maqueta/</b><small>en·es</small></span><span class="desc">maquetas + .txt de observaciones</span></div>
+				<div class="row" role="listitem"><span class="name"><i>├─</i><b>2_entrega/</b><small>en·es</small></span><span class="desc">HTML para el desarrollador</span></div>
+				<div class="row" role="listitem"><span class="name"><i>├─</i><b>3_integrado/</b><small>en·es</small></span><span class="desc">HTML devuelto con variables</span></div>
+				<div class="row" role="listitem"><span class="name"><i>├─</i><b>4_bucket/</b><small>dev·qa·prd</small></span><span class="desc">versión final por ambiente e idioma</span></div>
+				<div class="row" role="listitem"><span class="name"><i>├─</i><b>img/</b></span><span class="desc">solo .png/.jpg optimizados del proyecto</span></div>
+				<div class="row" role="listitem"><span class="name"><i>├─</i><b>trash/</b></span><span class="desc">papelera</span></div>
+				<div class="row" role="listitem"><span class="name"><i>└─</i><b>obs/</b></span><span class="desc">observaciones para producto (HTML con fecha, Word)</span></div>
+				<div class="row root sep" role="listitem"><span class="name"><b>ref/</b></span><span class="desc">referencias compartidas por todos los proyectos</span></div>
+				<div class="row root" role="listitem"><span class="name"><b>scripts/</b></span><span class="desc">optimizar.mjs · rutas.mjs · proyecto.mjs</span></div>
+				<div class="row root" role="listitem"><span class="name"><b>ambientes.json</b></span><span class="desc">URLs de dev, qa y prd (comunes a todos)</span></div>
+			</div>
+			<div class="head reveal" style="margin-top:22px">
+				<h3>Carpeta destino de imágenes</h3>
+			</div>
+			<p class="reveal">En el repo del bucket, las imágenes de cada proyecto no van sueltas en <code>img/</code>: van en una subcarpeta propia. Esa subcarpeta se guarda en <code>proyecto.json</code> como <code>carpetaImagenes</code>. <code>/maquetar-figma</code> la pregunta la primera vez y después solo pide confirmarla. La URL de <code>/entregar-dev</code> y <code>/publicar-ambientes</code> se arma así:</p>
+			<div class="url reveal">
+				<span class="a"><small>Ambiente · ambientes.json</small>https://itl-0003-portal-dev-s3-pub-templates-03.s3.eu-south-2.amazonaws.com/img/</span>
+				<span class="plus">+</span>
+				<span class="b"><small>proyecto.json</small>alerts/</span>
+				<span class="plus">+</span>
+				<span class="p"><small>Imagen</small>e-logo-incontrol.png</span>
+			</div>
+			<p class="note reveal">Por eso, al subir las imágenes al bucket hay que copiarlas en <code>img/alerts/</code>. En local, las maquetas siguen usando <code>../../img/</code> dentro de su proyecto.</p>
+		</section>
+
+		<section id="flujo" aria-labelledby="t-flujo">
+			<div class="head reveal">
+				<span class="eyebrow">El recorrido</span>
+				<h2 id="t-flujo">Cuatro etapas, una carpeta por etapa</h2>
+			</div>
+			<p class="reveal">Todo ocurre dentro de la carpeta del proyecto. Cada etapa deja su resultado en su carpeta numerada, dentro de la subcarpeta de su idioma (<code>en/</code> o <code>es/</code>). El número es el orden real del proceso: el HTML nunca salta una etapa.</p>
+			<div class="track reveal" role="list">
+				<div class="station st1" role="listitem">
+					<div class="dot">1</div>
+					<span class="folder">1_maqueta/<span class="langs">en · es</span></span>
+					<span class="who">Maqueta desde Figma, con imágenes optimizadas en <code>.png</code>/<code>.jpg</code> y el <code>.txt</code> de observaciones.</span>
+					<span class="skill">/maquetar-figma</span>
+				</div>
+				<div class="station st2" role="listitem">
+					<div class="dot">2</div>
+					<span class="folder">2_entrega/<span class="langs">en · es</span></span>
+					<span class="who">HTML para el desarrollador, con las imágenes en URL de PRD.</span>
+					<span class="skill">/entregar-dev</span>
+				</div>
+				<div class="station st3" role="listitem">
+					<div class="dot">3</div>
+					<span class="folder">3_integrado/<span class="langs">en · es</span></span>
+					<span class="who">Devuelto por el desarrollador, con las variables agregadas.</span>
+					<span class="skill human">lo guardas tú</span>
+				</div>
+				<div class="station st4" role="listitem">
+					<div class="dot">4</div>
+					<span class="folder">4_bucket/<span class="langs">dev · qa · prd / en · es</span></span>
+					<span class="who">Una versión por ambiente e idioma, lista para subir.</span>
+					<span class="skill">/publicar-ambientes</span>
+				</div>
+			</div>
+			<div class="callout reveal">
+				<span class="mark">↺</span>
+				<p><strong>Entre la etapa 2 y la 3 trabaja el desarrollador.</strong> Recibe los dos HTML de <code>2_entrega/</code>, agrega las variables y te los devuelve. Guardas cada uno en <code>3_integrado/</code>, en la carpeta de su idioma, y ahí haces los ajustes visuales que falten. Un mailing solo informativo, sin variables, también pasa por <code>3_integrado/</code>.</p>
+			</div>
+		</section>
+
+		<section id="carpetas" aria-labelledby="t-carpetas">
+			<div class="head reveal">
+				<span class="eyebrow">Dónde está cada cosa</span>
+				<h2 id="t-carpetas">Carpetas de un proyecto</h2>
+			</div>
+			<p class="reveal">Cada carpeta de HTML tiene una subcarpeta por idioma, también dentro de cada ambiente del bucket. El archivo se llama igual en ambos idiomas.</p>
+			<div class="table-wrap reveal">
+				<table>
+					<thead><tr><th>Carpeta</th><th>Contenido</th><th>Rutas de imágenes</th></tr></thead>
+					<tbody>
+						<tr><td><span class="mono">proyecto.json</span></td><td><code>carpetaImagenes</code>: subcarpeta de <code>img/</code> en el bucket (ej. <code>alerts/</code>). Se pregunta la primera vez.</td><td>—</td></tr>
+						<tr><td><span class="mono">1_maqueta/en · es/</span></td><td><code>&lt;nombre&gt;-local.html</code>: la maqueta generada desde Figma. <code>&lt;nombre&gt;-local.txt</code>: observaciones para diseño (erratas, fuentes, pendientes).</td><td>Relativas <code>../../img/</code></td></tr>
+						<tr><td><span class="mono">2_entrega/en · es/</span></td><td><code>&lt;nombre&gt;.html</code> para el desarrollador</td><td>PRD + <code>carpetaImagenes</code></td></tr>
+						<tr><td><span class="mono">3_integrado/en · es/</span></td><td><code>&lt;nombre&gt;.html</code> devuelto por el desarrollador, con variables</td><td>Las que traiga</td></tr>
+						<tr><td><span class="mono">4_bucket/</span></td><td><code>dev/</code>, <code>qa/</code>, <code>prd/</code>, cada uno con <code>en/</code> y <code>es/</code>: el HTML final por ambiente e idioma</td><td>Ambiente + <code>carpetaImagenes</code></td></tr>
+						<tr><td><span class="mono">img/</span></td><td><strong>Solo <code>.png</code>/<code>.jpg</code> optimizados</strong> del proyecto. Las que cambian por idioma llevan sufijo <code>-en</code> / <code>-es</code>.</td><td>—</td></tr>
+						<tr><td><span class="mono">trash/</span></td><td>Papelera. Ningún skill la usa.</td><td>—</td></tr>
+						<tr><td><span class="mono">obs/</span></td><td>Observaciones para producto: <code>observaciones-AAAA-MM-DD.html</code> (+ <code>.json</code>) y documentos. Nunca se sobrescriben.</td><td>—</td></tr>
+					</tbody>
+				</table>
+			</div>
+			<p class="note reveal">En la raíz quedan <code>ref/</code> (referencias compartidas), <code>ambientes.json</code> y <code>scripts/</code>: <code>optimizar.mjs</code> (PNG/JPG → <code>.png</code> o <code>.jpg</code> optimizado), <code>rutas.mjs</code> (entrega y publicación) y <code>proyecto.mjs</code> (resuelve la carpeta del proyecto).</p>
+		</section>
+
+		<section id="skills" aria-labelledby="t-skills">
+			<div class="head reveal">
+				<span class="eyebrow">Cómo se usa</span>
+				<h2 id="t-skills">Los skills</h2>
+			</div>
+			<p class="reveal">Se invocan en Claude Code escribiendo su nombre. Cada uno te pregunta solo lo necesario y, al terminar, te indica el siguiente paso.</p>
+
+			<div class="skills">
+				<article class="skill-card reveal" id="sk-maquetar">
+					<div class="skill-head">
+						<span class="skill-name">/maquetar-figma<span class="tag main">paso 1</span></span>
+						<span class="io">Figma EN + ES → <b>1_maqueta/en · es</b> + <b>.png/.jpg</b></span>
+					</div>
+					<div class="cols">
+						<div>
+							<div class="label">Te pide</div>
+							<ul>
+								<li><strong>Proyecto</strong> (ej. <code>alerts</code> → <code>mailings-alerts/</code>). Muestra los que ya existen.</li>
+								<li><strong>Carpeta destino de imágenes</strong> en el bucket (ej. <code>alerts/</code>). Si el proyecto ya la tiene, solo pide confirmarla.</li>
+								<li><strong>Dos links de Figma</strong> con <em>Copy link to selection</em>, uno del frame en inglés y otro del frame en español. Seleccionando solo el frame del mailing.</li>
+								<li><strong>Nombre del mailing</strong> con guiones entre partes y camelCase dentro de cada parte: <code>alert-newFees</code>, <code>alerts-optOut-freeTrial</code>.</li>
+							</ul>
+						</div>
+						<div>
+							<div class="label">Qué hace</div>
+							<ol>
+								<li>Revisa todas las maquetas de <code>ref/</code> y toma su estructura de tablas, comentarios y estilos.</li>
+								<li>Lee el diseño en inglés por secciones y revisa que las fuentes sean Arial. Del español toma los textos y detecta si alguna sección cambia de medida.</li>
+								<li>Te muestra qué bloque usará para cada sección de Figma.</li>
+								<li>Propone sugerencias y espera tu aprobación.</li>
+								<li>Exporta las imágenes a 2x y las guarda <strong>optimizadas como <code>.png</code> o <code>.jpg</code></strong> (el que pese menos) con prefijo <code>e-</code>. Las iguales en ambos idiomas se exportan una vez; las que llevan texto, una por idioma.</li>
+								<li>Escribe un HTML y un <code>.txt</code> por idioma, los abre con Edge y compara cada uno con su Figma.</li>
+							</ol>
+						</div>
+					</div>
+					<p class="note">Calidad de imagen: prueba calidades de <strong>75 a 100</strong> y, por formato, elige la más baja sin pérdida visible (PSNR de <strong>40 dB o más</strong>). Compara PNG sin pérdida, PNG con paleta y JPG (este solo si la imagen no usa transparencia) y usa el más liviano. Nunca <code>.webp</code>: Outlook de escritorio para Windows no lo muestra.</p>
+				</article>
+
+				<article class="skill-card reveal" id="sk-entregar">
+					<div class="skill-head">
+						<span class="skill-name">/entregar-dev<span class="tag main">paso 2</span></span>
+						<span class="io">1_maqueta/ → <b>2_entrega/en · es</b></span>
+					</div>
+					<div class="cols">
+						<div>
+							<div class="label">Te pide</div>
+							<ul><li>El proyecto y qué mailing de <code>1_maqueta/</code> entregar.</li></ul>
+						</div>
+						<div>
+							<div class="label">Qué hace</div>
+							<ul>
+								<li>Genera un HTML por idioma con las imágenes en la URL de PRD + <code>carpetaImagenes</code> (ej. <code>…/img/alerts/</code>), para que el desarrollador vea el render.</li>
+								<li>Si alguna imagen no es <code>.png</code>/<code>.jpg</code> o no está en el <code>img/</code> del proyecto, no genera nada y te la lista.</li>
+								<li>Lista las imágenes que deben estar subidas en PRD, en <code>img/&lt;carpetaImagenes&gt;</code>.</li>
+							</ul>
+						</div>
+					</div>
+					<div class="cmd"><pre>npm run mail:entregar -- --proyecto alerts --nombre &lt;nombre&gt;
+<span class="c"># solo un idioma</span>
+npm run mail:entregar -- --proyecto alerts --nombre &lt;nombre&gt; --idioma es</pre><button class="copy" type="button">Copiar</button></div>
+				</article>
+
+				<article class="skill-card reveal" id="sk-publicar">
+					<div class="skill-head">
+						<span class="skill-name">/publicar-ambientes<span class="tag main">paso 3</span></span>
+						<span class="io">3_integrado/ → <b>4_bucket/dev · qa · prd</b></span>
+					</div>
+					<div class="cols">
+						<div>
+							<div class="label">Te pide</div>
+							<ul>
+								<li>El proyecto y qué mailing de <code>3_integrado/</code> publicar.</li>
+								<li>Qué ambientes e idiomas. Por defecto, todos.</li>
+							</ul>
+						</div>
+						<div>
+							<div class="label">Qué hace</div>
+							<ul>
+								<li>Lista las variables de cada idioma para que confirmes que es la versión del desarrollador y que coinciden entre <code>en</code> y <code>es</code>.</li>
+								<li>Cambia <strong>solo las URLs de imágenes</strong> por las del ambiente + <code>carpetaImagenes</code>. No toca variables ni contenido, y no duplica la subcarpeta si el HTML ya la trae.</li>
+								<li>Rechaza archivos que no estén en <code>3_integrado/en/</code> o <code>3_integrado/es/</code>.</li>
+							</ul>
+						</div>
+					</div>
+					<div class="cmd"><pre>npm run mail:publicar -- --proyecto alerts --nombre &lt;nombre&gt;
+<span class="c"># solo un ambiente</span>
+npm run mail:publicar -- --proyecto alerts --nombre &lt;nombre&gt; --env qa</pre><button class="copy" type="button">Copiar</button></div>
+				</article>
+
+				<article class="skill-card reveal" id="sk-optimizar">
+					<div class="skill-head">
+						<span class="skill-name">/optimizar-imagenes<span class="tag">auxiliar</span></span>
+						<span class="io">PNG/JPG suelto → <b>.png/.jpg</b> en img/</span>
+					</div>
+					<div class="cols">
+						<div>
+							<div class="label">Te pide</div>
+							<ul><li>El proyecto, qué imágenes optimizar y con qué nombre deben quedar.</li></ul>
+						</div>
+						<div>
+							<div class="label">Qué hace</div>
+							<ul>
+								<li>Agrega o reemplaza imágenes después de maquetar: una imagen corregida por diseño, un logo nuevo.</li>
+								<li>Los originales nunca se guardan en <code>img/</code>.</li>
+								<li>Elige por imagen el formato más liviano: PNG con paleta, PNG sin pérdida o JPG (solo sin transparencia).</li>
+								<li><code>--force</code> reemplaza la imagen con ese nombre en cualquier extensión y borra la anterior. Si la extensión cambió, actualiza el <code>src</code> en las maquetas.</li>
+							</ul>
+						</div>
+					</div>
+					<div class="cmd"><pre>npm run img:optimizar -- --proyecto alerts --dir &lt;carpeta-con-png&gt;
+<span class="c"># reemplazar una imagen existente (borra la anterior)</span>
+npm run img:optimizar -- --proyecto alerts --files &lt;ruta&gt;/e-banner-es.png --force</pre><button class="copy" type="button">Copiar</button></div>
+				</article>
+
+				<article class="skill-card reveal" id="sk-observaciones">
+					<div class="skill-head">
+						<span class="skill-name">/observaciones-html<span class="tag">solo a pedido</span></span>
+						<span class="io">.txt → <b>página scrollytelling</b> en obs/</span>
+					</div>
+					<div class="cols">
+						<div>
+							<div class="label">Te pide</div>
+							<ul>
+								<li>El proyecto.</li>
+								<li>Qué mailings incluir, con <strong>casillas</strong>. Cada uno indica si es nuevo o en qué fecha ya se observó.</li>
+							</ul>
+						</div>
+						<div>
+							<div class="label">Qué hace</div>
+							<ul>
+								<li>Mailing fijo a la izquierda y observaciones a la derecha, con una línea animada que apunta al lugar del correo.</li>
+								<li>Faltas de ortografía en cian. Un solo HTML, con maquetas e imágenes embebidas.</li>
+								<li>Guarda <code>&lt;proyecto&gt;/obs/observaciones-AAAA-MM-DD.html</code>. Nunca sobrescribe: si ya hay una ese día, agrega <code>-2</code>, <code>-3</code>…</li>
+								<li>Solo corre cuando lo invocas; Claude no lo usa por su cuenta.</li>
+							</ul>
+						</div>
+					</div>
+				</article>
+			</div>
+		</section>
+
+		<section id="reglas" aria-labelledby="t-reglas">
+			<div class="head reveal">
+				<span class="eyebrow">Al maquetar</span>
+				<h2 id="t-reglas">Manda Figma</h2>
+			</div>
+			<p class="reveal">El diseño se respeta tal cual. Las sugerencias del skill son informativas y solo se aplican si las apruebas.</p>
+			<div class="rules">
+				<div class="rule reveal"><h3>Cada idioma con su diseño</h3><p>Los textos en inglés y español salen de su propio link de Figma. El skill no traduce.</p></div>
+				<div class="rule reveal"><h3>Todo en Arial</h3><p>Si Figma trae otra fuente, el skill te avisa para que lo corrija el diseñador; no la cambia por su cuenta.</p></div>
+				<div class="rule reveal"><h3>Esquinas redondeadas</h3><p>Se mantienen. Producto sabe que en Outlook de escritorio se ven rectas.</p></div>
+				<div class="rule reveal"><h3>Enlaces con <code>href="#"</code></h3><p>En botones y textos de acción. Las URLs y las variables las pone el desarrollador; el skill no inventa ninguna.</p></div>
+				<div class="rule reveal"><h3>Dominios y correos como enlace</h3><p>Un dominio escrito en el diseño va con <code>https://</code> y un correo con <code>mailto:</code>, con la misma apariencia: color, peso y sin subrayado.</p></div>
+				<div class="rule reveal"><h3>Solo <code>.png</code> / <code>.jpg</code></h3><p>Optimizados, el formato que pese menos; nunca <code>.webp</code> (Outlook de escritorio no lo muestra). Ilustraciones compuestas en una sola imagen; íconos repetidos, un <code>.png</code> transparente reutilizado.</p></div>
+			</div>
+		</section>
+
+		<section id="ambientes" aria-labelledby="t-ambientes">
+			<div class="head reveal">
+				<span class="eyebrow">Configuración</span>
+				<h2 id="t-ambientes">URLs por ambiente</h2>
+			</div>
+			<p class="reveal">Viven en <code>ambientes.json</code>, en la raíz del repositorio, y son comunes a todos los proyectos. Si cambia un bucket, se edita solo ese archivo; los skills no preguntan URLs. A cada URL se le agrega la <code>carpetaImagenes</code> del <code>proyecto.json</code> (ej. <code>alerts/</code>).</p>
+			<div class="table-wrap reveal">
+				<table>
+					<thead><tr><th>Ambiente</th><th>URL base de imágenes</th></tr></thead>
+					<tbody>
+						<tr><td><span class="mono">dev</span></td><td class="mono" style="overflow-wrap:anywhere">https://itl-0003-portal-dev-s3-pub-templates-03.s3.eu-south-2.amazonaws.com/img/</td></tr>
+						<tr><td><span class="mono">qa</span></td><td class="mono" style="overflow-wrap:anywhere">https://itl-0003-portal-qa-s3-pub-templates-02.s3.eu-south-2.amazonaws.com/img/</td></tr>
+						<tr><td><span class="mono">prd</span> <span class="chip" style="padding:2px 8px">entrega</span></td><td class="mono" style="overflow-wrap:anywhere">https://itl-0003-portal-prd-s3-pub-templates-02.s3.eu-south-2.amazonaws.com/img/</td></tr>
+					</tbody>
+				</table>
+			</div>
+			<p class="note reveal"><code>"entrega": "prd"</code> define qué URLs lleva el HTML que recibe el desarrollador, y <code>"idiomas": ["en", "es"]</code> define las subcarpetas de idioma.</p>
+		</section>
+
+		<section id="ejemplo" aria-labelledby="t-ejemplo">
+			<div class="head reveal">
+				<span class="eyebrow">De principio a fin</span>
+				<h2 id="t-ejemplo">Ejemplo: alert-newFees</h2>
+			</div>
+			<div class="example reveal">
+				<div class="ex-step"><span class="what">/maquetar-figma</span><span class="out">proyecto alerts · carpeta alerts/ → mailings-alerts/1_maqueta/en · es/alert-newFees-local.html</span></div>
+				<div class="ex-step"><span class="what">/entregar-dev</span><span class="out">mailings-alerts/2_entrega/en · es/alert-newFees.html</span></div>
+				<div class="ex-step manual"><span class="what">Subes las imágenes a PRD en img/alerts/ y envías los dos HTML</span><span class="out">el desarrollador agrega variables</span></div>
+				<div class="ex-step manual"><span class="what">Guardas lo que devuelve</span><span class="out">mailings-alerts/3_integrado/en · es/alert-newFees.html</span></div>
+				<div class="ex-step"><span class="what">/publicar-ambientes</span><span class="out">mailings-alerts/4_bucket/dev · qa · prd/en · es/alert-newFees.html</span></div>
+			</div>
+		</section>
+
+		<section id="refs" aria-labelledby="t-refs">
+			<div class="head reveal">
+				<span class="eyebrow">Mejorar el resultado</span>
+				<h2 id="t-refs">Agregar referencias</h2>
+			</div>
+			<p class="reveal">Copia a <code>ref/</code> el HTML de un mailing aprobado para que <code>/maquetar-figma</code> aprenda nuevos patrones: tablas de datos, varias columnas u otros pies. Esa carpeta es común a todos los proyectos. El skill revisa todos sus archivos en cada maquetación y usa como base el más parecido al diseño.</p>
+		</section>
+
+		<section id="problemas" aria-labelledby="t-problemas">
+			<div class="head reveal">
+				<span class="eyebrow">Si algo falla</span>
+				<h2 id="t-problemas">Problemas comunes</h2>
+			</div>
+			<div class="table-wrap reveal">
+				<table>
+					<thead><tr><th>Mensaje o síntoma</th><th>Qué hacer</th></tr></thead>
+					<tbody>
+						<tr><td><code>No existe el proyecto mailings-x/</code></td><td>Revisa el nombre (<code>--proyecto alerts</code>) o crea el proyecto con <code>/maquetar-figma</code>.</td></tr>
+						<tr><td><code>"carpetaImagenes" debe ser…</code></td><td>Corrige <code>proyecto.json</code>: por ejemplo <code>"alerts/"</code>, sin <code>/</code> al inicio.</td></tr>
+						<tr><td><code>Todas las imágenes deben ser .png o .jpg</code></td><td>La maqueta apunta a otro formato (ej. un <code>.webp</code>): optimiza la imagen con <code>/optimizar-imagenes</code> y cambia el <code>src</code> a la extensión que eligió.</td></tr>
+						<tr><td><code>Faltan en mailings-x/img/</code></td><td>La maqueta usa una imagen que no está en el <code>img/</code> del proyecto: expórtalo de nuevo o corrige el <code>src</code>.</td></tr>
+						<tr><td><code>Ya existen en img/ (usa --force…)</code></td><td>Hay una imagen con ese nombre (en cualquier extensión). Si es otra imagen, renombra el original; si es la misma actualizada, usa <code>--force</code> (reemplaza y borra la anterior).</td></tr>
+						<tr><td><code>Se publica solo desde 3_integrado/…</code></td><td>Guarda primero el HTML del desarrollador en <code>3_integrado/en/</code> o <code>3_integrado/es/</code>.</td></tr>
+						<tr><td><code>tiene lang="en" pero está en es/</code></td><td>El HTML quedó en la carpeta del otro idioma o tiene un <code>lang</code> incorrecto.</td></tr>
+						<tr><td><code>Ambiente "x" no está en ambientes.json</code></td><td>Usa <code>dev</code>, <code>qa</code> o <code>prd</code>, o agrega el ambiente al JSON.</td></tr>
+						<tr><td>Figma tarda o devuelve solo la estructura</td><td>Copia el link seleccionando solo el frame del mailing; el skill pide el detalle por secciones.</td></tr>
+						<tr><td>No se ve el render de <code>2_entrega/</code></td><td>Las imágenes aún no están subidas en <code>img/&lt;carpetaImagenes&gt;</code> del bucket de PRD.</td></tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<footer>Proyecto <span class="mono">new-mailings</span> · los skills viven en <span class="mono">.claude/skills/</span> y el detalle completo está en <span class="mono">README.md</span>.</footer>
+	</div>
+</main>
+
+<script>
+// copiar comandos (sin las líneas de comentario)
+document.querySelectorAll('.cmd .copy').forEach((btn) => {
+	btn.addEventListener('click', () => {
+		const pre = btn.parentElement.querySelector('pre');
+		const text = [...pre.childNodes].filter((n) => !(n.nodeType === 1 && n.classList.contains('c'))).map((n) => n.textContent).join('').replace(/\n{2,}/g, '\n').trim();
+		const done = (label) => { btn.textContent = label; setTimeout(() => { btn.textContent = 'Copiar'; }, 1600); };
+		const select = () => { const r = document.createRange(); r.selectNodeContents(pre); const s = getSelection(); s.removeAllRanges(); s.addRange(r); done('Seleccionado'); };
+		try { navigator.clipboard.writeText(text).then(() => done('Copiado'), select); } catch (e) { select(); }
+	});
+});
+
+// menú: resalta la sección visible
+const links = [...document.querySelectorAll('.toc a')];
+const targets = links.map((a) => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const where = document.getElementById('where');
+let current = null;
+function spy() {
+	const line = innerHeight * 0.3;
+	let hit = targets[0];
+	for (const t of targets) if (t.getBoundingClientRect().top <= line) hit = t;
+	// las tarjetas de skills ganan a su sección contenedora
+	if (hit === current) return;
+	current = hit;
+	links.forEach((a) => a.classList.toggle('on', a.getAttribute('href') === '#' + hit.id));
+	const on = links.find((a) => a.classList.contains('on'));
+	if (on) {
+		where.textContent = [...on.childNodes].filter((n) => !(n.nodeType === 1 && n.classList.contains('n'))).map((n) => n.textContent).join('').trim();
+		on.scrollIntoView({ block: 'nearest' });
+	}
+}
+targets.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+addEventListener('scroll', () => requestAnimationFrame(spy), { passive: true });
+addEventListener('resize', spy);
+spy();
+
+// menú en móvil
+const body = document.body;
+document.getElementById('open-menu').addEventListener('click', () => body.classList.add('menu'));
+document.getElementById('scrim').addEventListener('click', () => body.classList.remove('menu'));
+links.forEach((a) => a.addEventListener('click', () => body.classList.remove('menu')));
+
+// aparición suave
+const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && (e.target.classList.add('in'), io.unobserve(e.target))), { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+// tema claro / oscuro (se recuerda en este navegador)
+const root = document.documentElement;
+try { const t = localStorage.getItem('readme-theme'); if (t) root.dataset.theme = t; } catch (e) {}
+document.getElementById('theme').addEventListener('click', () => {
+	const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+	root.dataset.theme = dark ? 'light' : 'dark';
+	try { localStorage.setItem('readme-theme', root.dataset.theme); } catch (e) {}
+});
+</script>
+</body>
+</html>

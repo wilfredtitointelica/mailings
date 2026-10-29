@@ -1,0 +1,122 @@
+OBSERVACIONES DE MAQUETACIÓN
+Mailing:  alerts-optOut-lastDay
+Idioma:   ES (español)
+Maqueta:  1_maqueta/es/alerts-optOut-lastDay-local.html
+Figma:    https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6539-106065
+Fecha:    2026-10-29 (4.ª revisión, después de los ajustes de diseño)
+
+La maqueta respeta Figma tal cual. Los puntos de este archivo son para que diseño/contenido
+los revise y, si corresponde, corrija Figma; luego se vuelve a maquetar.
+
+
+RESUELTO EN FIGMA Y YA APLICADO EN LA MAQUETA
+---------------------------------------------
+4.ª revisión:
+  - "...finalice el período de prueba" → "...finalice el periodo de prueba" (6539:109561).
+    Ya todo el correo usa "periodo".
+3.ª revisión:
+  - "El período" → "El periodo" al inicio de "¿Qué ocurrió?" (6539:109561).
+  - Ilustración del dashboard: títulos de tarjetas en otro tono. Ahora es distinta a la de
+    freeTrial (aquí dice "Revisa tus Opt-Outs activos", allá "opt-outs"), así que tiene su
+    propia imagen: e-optout-dashboard-lastday-es.png.
+  - Pie: se quitó "Ver en el browser" (el pie mide 26px menos).
+2.ª revisión:
+  - "con opt-out" en lugar de "con opción de exclusión" (6539:109561).
+
+
+1. TEXTOS A REVISAR (quedaron como en Figma)
+--------------------------------------------
+1.1  Textos copiados de otro mailing
+     Nodos y textos:
+       - 6539:109561  "El periodo de prueba gratuito del nuevo servicio con opt-out está por
+                      comenzar..."
+       - 6539:109557  "Si no realiza ninguna acción antes de la fecha límite..."
+     Revisar: el frame se llama "Próximos Servicios Opt Out - Último día" y el hito activo es
+     "Último día para desuscribirse", pero los párrafos son los del aviso de periodo de prueba
+     (alerts-optOut-freeTrial). Confirmar los textos de este mailing.
+
+1.2  Terminología mezclada para "opt-out"
+     Nodos y textos:
+       - 6539:106071  "Alerta de Servicios Opt-Out"
+       - 6539:109561  "...nuevo servicio con opt-out..."
+       - 6556:81762   "Último día para desuscribirse"
+       - 6539:109557  "...la fecha límite para darse de baja..."
+     Revisar: el mismo concepto aparece como "Opt-Out", "opt-out", "desuscribirse" y
+     "darse de baja".
+
+1.3  Tuteo mezclado con usted
+     Etiquetas dentro de la ilustración (6566:92802): "Revisa tus Opt-Outs activos",
+     "Consulta tus ahorros del año", "Actúa antes de la facturación", "Compara costos y
+     proyecciones"; franja (6566:89154): "Conoce más en incontrol.intelica.com".
+     Revisar: el resto del correo trata de usted ("Le recomendamos", "Si no realiza",
+     "¿Necesita…?", "ayudarle"). Las etiquetas de la ilustración están dentro de la imagen.
+
+1.4  Texto de ayuda sobre "tarifas"
+     Nodo:   6566:89225
+     Texto:  "¿Necesita ayuda para comprender estas tarifas?"
+     Revisar: es el texto de alert-newFees; este correo trata de un servicio opt-out.
+
+1.5  Nombre de programa en inglés
+     Nodo:   6539:109570
+     Texto:  "...en el programa Fraud Reporting and Control Program..."
+     Revisar: confirmar si se deja en inglés por ser nombre propio; "el programa ... Program"
+     repite la palabra.
+
+
+2. FUENTES DISTINTAS DE ARIAL
+-----------------------------
+Ninguna. Todos los textos visibles están en Arial (los textos en Lato están dentro de la
+ilustración del dashboard, que va como imagen).
+
+
+3. DIFERENCIAS CON FIGMA
+------------------------
+Ninguna. El alto total coincide con Figma (1786px) con 1px de diferencia como máximo.
+
+Diferencias de layout respecto a EN (vienen así en Figma y se respetaron):
+  - Texto de la tabla del servicio en 5 líneas (EN: 4): todo lo que sigue baja 16px.
+  - Etiquetas de la línea de tiempo en 2 líneas, con el corte de Figma; las líneas
+    verticales miden 32px (EN: 48px), así que la línea de tiempo mide lo mismo.
+  En total ES mide 1786px (EN: 1770px).
+
+Nota técnica: la línea punteada de la línea de tiempo con sus 3 puntos de color
+(nodo 6556:81744) va como una imagen (e-timeline-track-step2.png, 542×16, la misma que EN)
+armada con los vectores de Figma, porque en HTML de correo no se pueden dibujar círculos ni
+líneas punteadas con esas medidas. Las líneas verticales, fechas y etiquetas sí están
+maquetadas en HTML.
+
+
+4. SUGERENCIAS DE MAQUETADOR NO APLICADAS (quedaron como en Figma)
+------------------------------------------------------------------
+4.1  Botón "Revisar en incontrol" (6545:81749): texto #eef2fc sobre #fa573e tiene contraste
+     aprox. 2.9:1 (WCAG pide 4.5:1). Sugerencia: texto #ffffff.
+
+4.2  Franja "Conoce más en incontrol.intelica.com" (6566:89154): line-height 8px con texto
+     de 12px; Outlook de escritorio puede recortar el texto. Sugerencia: line-height 16px
+     (la franja mantiene 75px de alto).
+
+4.3  Ilustración del dashboard (6566:92802): los textos de las etiquetas quedan dentro de la
+     imagen. Si las imágenes no cargan solo se ve el alt "Panel de servicios Opt-Out en
+     incontrol". Tiene su propia imagen (e-optout-dashboard-lastday-es.png): ya no es igual a la de
+     alerts-optOut-freeTrial.
+
+
+5. LINKS
+--------
+Pendientes para el desarrollador (href="#"):
+  - Botón "Revisar en incontrol"
+  - "Actualizar preferencias"
+  - "desuscribirse"
+
+Enlaces creados con la misma apariencia del texto:
+  - incontrol.intelica.com      -> https://incontrol.intelica.com
+  - clientsuccess@intelica.com  -> mailto:clientsuccess@intelica.com
+  - Logo incontrol              -> https://incontrol.intelica.com/login (como en las referencias; no viene en Figma)
+
+
+6. DATOS DE EJEMPLO
+-------------------
+Variable {{brand}}, código "AI15067", servicio "Visa Risk Essentials and Visa Provisioning
+Intelligence", logo VISA y fechas (26 junio 2025, 30 setiembre 2025, 1 octubre 2025): datos de
+muestra que reemplaza el desarrollador; solo informativo. Si la marca cambia (ej. Mastercard),
+hará falta otro logo.

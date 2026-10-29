@@ -1,0 +1,90 @@
+OBSERVACIONES DE MAQUETACIÓN
+Mailing:  alerts-optOut-lastDay
+Idioma:   EN (inglés)
+Maqueta:  1_maqueta/en/alerts-optOut-lastDay-local.html
+Figma:    https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6530-92138
+Fecha:    2026-10-29 (4.ª revisión, después de los ajustes de diseño)
+
+La maqueta respeta Figma tal cual. Los puntos de este archivo son para que diseño/contenido
+los revise y, si corresponde, corrija Figma; luego se vuelve a maquetar.
+
+
+RESUELTO EN FIGMA Y YA APLICADO EN LA MAQUETA
+---------------------------------------------
+4.ª revisión:
+  - Sin cambios en Figma para este mailing.
+3.ª revisión:
+  - Ilustración del dashboard: los títulos de las tarjetas cambiaron de tono (misma imagen que
+    freeTrial, e-optout-dashboard-en, exportada de nuevo).
+  - Pie: se quitó "View email in browser" (el pie mide 26px menos).
+2.ª revisión:
+  - Título "Opt-out service alert" (6755:85083), erratas "oput-out" y "wether" corregidas,
+    punto final en "What happened?", "Last day to opt-out" (6556:81702).
+
+
+1. ERRATAS Y TEXTOS A REVISAR
+-----------------------------
+1.1  Textos copiados de otro mailing
+     Nodos y textos:
+       - 6530:92171  "The free trial period of the new opt-out service is about to begin..."
+       - 6530:92174  "If no action is taken before the opt-out deadline..."
+     Revisar: el frame se llama "Upcoming Opt-Out Services - Last Day" y el hito activo es
+     "Last day to opt-out", pero los párrafos siguen siendo los del aviso de periodo de prueba
+     (alerts-optOut-freeTrial), palabra por palabra. Confirmar los textos de este mailing.
+
+1.2  Texto de ayuda sobre "fees"
+     Nodo:   6566:89197
+     Texto:  "Need help understanding these fees?"
+     Revisar: es el texto de alert-newFees; este correo trata de un servicio opt-out.
+
+
+2. FUENTES DISTINTAS DE ARIAL
+-----------------------------
+Ninguna. Todos los textos visibles están en Arial (los textos en Lato están dentro de la
+ilustración del dashboard, que va como imagen).
+
+
+3. DIFERENCIAS CON FIGMA
+------------------------
+Ninguna. El alto total coincide con Figma (1770px) con 1px de diferencia como máximo.
+
+Nota técnica: la línea punteada de la línea de tiempo con sus 3 puntos de color
+(nodo 6556:81684) va como una imagen (e-timeline-track-step2.png, 542×16, con el 2.º punto
+en naranja) armada con los vectores de Figma, porque en HTML de correo no se pueden dibujar
+círculos ni líneas punteadas con esas medidas. Las líneas verticales, fechas y etiquetas sí
+están maquetadas en HTML.
+
+
+4. SUGERENCIAS DE MAQUETADOR NO APLICADAS (quedaron como en Figma)
+------------------------------------------------------------------
+4.1  Botón "Review in incontrol" (6530:92168): texto #eef2fc sobre #fa573e tiene contraste
+     aprox. 2.9:1 (WCAG pide 4.5:1). Sugerencia: texto #ffffff.
+
+4.2  Franja "Learn more at incontrol.intelica.com" (6566:89098): line-height 8px con texto
+     de 12px; Outlook de escritorio puede recortar el texto. Sugerencia: line-height 16px
+     (la franja mantiene 75px de alto).
+
+4.3  Ilustración del dashboard (6568:96082): los textos de las etiquetas quedan dentro de la
+     imagen. Si las imágenes no cargan solo se ve el alt "Opt-Out Services Dashboard in
+     incontrol". Es la misma imagen de alerts-optOut-freeTrial (e-optout-dashboard-en.png).
+
+
+5. LINKS
+--------
+Pendientes para el desarrollador (href="#"):
+  - Botón "Review in incontrol"
+  - "Update your preferences"
+  - "unsubscribe"
+
+Enlaces creados con la misma apariencia del texto:
+  - incontrol.intelica.com      -> https://incontrol.intelica.com
+  - clientsuccess@intelica.com  -> mailto:clientsuccess@intelica.com
+  - Logo incontrol              -> https://incontrol.intelica.com/login (como en las referencias; no viene en Figma)
+
+
+6. DATOS DE EJEMPLO
+-------------------
+Variable {{brand}}, código "AI15067", servicio "Visa Risk Essentials and Visa Provisioning
+Intelligence", logo VISA y fechas (26 June 2025, 30 September 2025, 1 October 2025): datos de
+muestra que reemplaza el desarrollador; solo informativo. Si la marca cambia (ej. Mastercard),
+hará falta otro logo.

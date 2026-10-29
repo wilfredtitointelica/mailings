@@ -1,0 +1,12 @@
+{
+	"entrega": "prd",
+	"idiomas": [
+		"en",
+		"es"
+	],
+	"ambientes": {
+		"dev": "https://itl-0003-portal-dev-s3-pub-templates-03.s3.eu-south-2.amazonaws.com/img/",
+		"qa": "https://itl-0003-portal-qa-s3-pub-templates-02.s3.eu-south-2.amazonaws.com/img/",
+		"prd": "https://itl-0003-portal-prd-s3-pub-templates-02.s3.eu-south-2.amazonaws.com/img/"
+	}
+}

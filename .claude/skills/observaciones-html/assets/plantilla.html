@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Observaciones mailings alertas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+	--bg: #f3f4f8;
+	--surface: #ffffff;
+	--ink: #0a1733;
+	--ink-2: #4b5876;
+	--ink-3: #8a94ab;
+	--line: #e3e6ef;
+	--blue: #1b3e88;
+	--orange: #fa573e;
+	--cyan: #00e5ff;
+	--corregir: #e5484d;
+	--revisar: #f0a020;
+	--fuente: #8e6cef;
+	--corregido: #2fb37a;
+	--shadow: 0 1px 2px rgba(10, 23, 51, .06), 0 8px 24px rgba(10, 23, 51, .06);
+	--shadow-lg: 0 2px 4px rgba(10, 23, 51, .06), 0 24px 48px rgba(10, 23, 51, .14);
+	--ease: cubic-bezier(.22, .8, .2, 1);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+	margin: 0;
+	background: var(--bg);
+	color: var(--ink);
+	font-family: Inter, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* ---------- barra superior ---------- */
+.topbar {
+	position: fixed; inset: 0 0 auto 0; z-index: 50;
+	height: 60px; padding: 0 24px;
+	display: flex; align-items: center; gap: 20px;
+	background: rgba(243, 244, 248, .82);
+	backdrop-filter: saturate(1.4) blur(14px);
+	border-bottom: 1px solid var(--line);
+}
+.brand { font-weight: 800; font-size: 14px; letter-spacing: .02em; white-space: nowrap; }
+.brand b { color: var(--orange); }
+.chips { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
+.chip {
+	flex: none; padding: 6px 12px; border-radius: 999px;
+	font: 600 12px/1 Inter, sans-serif; color: var(--ink-2); text-decoration: none;
+	border: 1px solid transparent; transition: all .35s var(--ease);
+}
+.chip:hover { background: #fff; }
+.chip.on { background: var(--ink); color: #fff; }
+.progress { position: absolute; left: 0; bottom: -1px; height: 2px; width: 0; background: linear-gradient(90deg, var(--orange), var(--cyan)); }
+
+/* ---------- portada ---------- */
+.hero { max-width: 1180px; margin: 0 auto; padding: 140px 24px 72px; }
+.eyebrow { font: 700 12px/1 Inter, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--orange); }
+.hero h1 { font-size: clamp(36px, 5.4vw, 64px); line-height: 1.04; letter-spacing: -.03em; margin: 16px 0 18px; max-width: 14ch; }
+.hero p.lead { font-size: 18px; line-height: 1.6; color: var(--ink-2); max-width: 62ch; margin: 0 0 32px; }
+.legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 48px; }
+.tag {
+	display: inline-flex; align-items: center; gap: 8px;
+	padding: 6px 12px 6px 10px; border-radius: 999px; background: #fff; box-shadow: var(--shadow);
+	font: 600 13px/1 Inter, sans-serif; color: var(--ink-2);
+}
+.tag i { width: 10px; height: 10px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 18%, transparent); }
+.summary { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+.sum {
+	display: block; text-decoration: none; color: inherit;
+	background: #fff; border-radius: 18px; padding: 20px; box-shadow: var(--shadow);
+	transition: transform .4s var(--ease), box-shadow .4s var(--ease);
+}
+.sum:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.sum .n { font: 700 12px/1 Inter, sans-serif; color: var(--ink-3); }
+.sum h3 { font-size: 15px; margin: 8px 0 14px; word-break: break-word; }
+.bars { display: flex; gap: 4px; height: 6px; border-radius: 4px; overflow: hidden; background: var(--line); margin-bottom: 10px; }
+.bars span { background: var(--c); }
+.counts { display: flex; gap: 12px; font: 600 12px/1 Inter, sans-serif; color: var(--ink-2); flex-wrap: wrap; }
+.counts b { color: var(--c); }
+.scroll-hint { margin-top: 56px; display: flex; align-items: center; gap: 10px; color: var(--ink-3); font-size: 13px; }
+.scroll-hint span { width: 22px; height: 34px; border: 2px solid var(--ink-3); border-radius: 12px; position: relative; }
+.scroll-hint span::after { content: ""; position: absolute; left: 50%; top: 6px; width: 4px; height: 6px; margin-left: -2px; border-radius: 2px; background: var(--ink-3); animation: wheel 1.8s var(--ease) infinite; }
+@keyframes wheel { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(12px); } }
+
+/* ---------- capítulos ---------- */
+.chapter { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+.chapter-head { padding: 120px 0 20px; max-width: 760px; }
+.chapter-head .num { font: 800 13px/1 Inter, sans-serif; color: var(--orange); letter-spacing: .1em; }
+.chapter-head h2 { font-size: clamp(28px, 3.6vw, 44px); letter-spacing: -.025em; margin: 10px 0 8px; word-break: break-word; }
+.chapter-head p { color: var(--ink-2); font-size: 17px; margin: 0; }
+.warn {
+	margin-top: 18px; padding: 14px 16px; border-radius: 14px;
+	background: #fff4f1; border: 1px solid #ffd7cd; color: #7a2a1b; font-size: 15px; line-height: 1.55;
+}
+
+.block { display: grid; grid-template-columns: minmax(360px, 560px) 1fr; gap: 88px; padding-top: 32px; }
+.stage { position: sticky; top: 84px; height: calc(100vh - 108px); }
+.device {
+	height: 100%; display: flex; flex-direction: column;
+	background: #fff; border-radius: 22px; box-shadow: var(--shadow-lg); overflow: hidden;
+	border: 1px solid var(--line);
+}
+.device-bar { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+.dots { display: flex; gap: 6px; }
+.dots i { width: 10px; height: 10px; border-radius: 50%; background: #e6e8ef; }
+.dots i:first-child { background: #ff6b5f; } .dots i:nth-child(2) { background: #ffc145; } .dots i:nth-child(3) { background: #2fcf6b; }
+.subject { flex: 1; min-width: 0; font: 600 13px/1.2 Inter, sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lang { font: 700 11px/1 Inter, sans-serif; padding: 5px 8px; border-radius: 6px; background: var(--ink); color: #fff; letter-spacing: .06em; }
+.figma { font: 600 12px/1 Inter, sans-serif; color: var(--blue); text-decoration: none; white-space: nowrap; }
+.figma:hover { text-decoration: underline; }
+.viewport { position: relative; flex: 1; overflow: hidden; background: #e9e9e9; }
+.scroller { position: absolute; top: 0; left: 0; transform-origin: 0 0; transition: transform 1s var(--ease); will-change: transform; }
+.scroller iframe { display: block; width: 632px; border: 0; pointer-events: none; }
+.viewport::after { content: ""; position: absolute; inset: auto 0 0 0; height: 48px; background: linear-gradient(transparent, rgba(233, 233, 233, .9)); pointer-events: none; }
+
+.steps { padding: 28vh 0 46vh; }
+.step {
+	--c: var(--revisar);
+	position: relative; margin-bottom: 36vh;
+	background: #fff; border-radius: 20px; padding: 22px 24px 22px 26px;
+	box-shadow: var(--shadow); border: 1px solid var(--line);
+	opacity: .38; transform: translateX(14px) scale(.985);
+	transition: opacity .6s var(--ease), transform .6s var(--ease), box-shadow .6s var(--ease), border-color .6s var(--ease);
+}
+.step:last-child { margin-bottom: 0; }
+.step::before { content: ""; position: absolute; left: -1px; top: 18px; bottom: 18px; width: 4px; border-radius: 4px; background: var(--c); transform: scaleY(.2); opacity: 0; transition: all .6s var(--ease); }
+.step.on { opacity: 1; transform: none; box-shadow: var(--shadow-lg); border-color: color-mix(in srgb, var(--c) 45%, var(--line)); }
+.step.on::before { transform: none; opacity: 1; }
+.step .top { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+.pill { font: 700 11px/1 Inter, sans-serif; letter-spacing: .06em; text-transform: uppercase; padding: 6px 9px; border-radius: 999px; color: var(--c); background: color-mix(in srgb, var(--c) 14%, #fff); }
+.where { font: 700 15px/1.3 Inter, sans-serif; }
+.node { margin-left: auto; font: 500 11px/1 Inter, sans-serif; color: var(--ink-3); }
+.quote {
+	margin: 0 0 12px; padding: 12px 14px; border-radius: 12px; background: #f6f7fb;
+	font-size: 14.5px; line-height: 1.55; color: var(--ink-2); font-style: italic; word-break: break-word;
+}
+.what { margin: 0; font-size: 15.5px; line-height: 1.6; }
+mark.errata { background: var(--cyan); color: var(--ink); font-weight: 700; font-style: normal; padding: 1px 4px; border-radius: 4px; box-shadow: 0 0 0 0 rgba(0, 229, 255, .6); }
+.step.on mark.errata { animation: glow 1.8s var(--ease) infinite; }
+@keyframes glow { 0% { box-shadow: 0 0 0 0 rgba(0, 229, 255, .7); } 100% { box-shadow: 0 0 0 10px rgba(0, 229, 255, 0); } }
+.step .count { position: absolute; right: 18px; bottom: 14px; font: 700 11px/1 Inter, sans-serif; color: var(--ink-3); }
+
+/* ---------- línea ---------- */
+#wire { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 40; overflow: visible; }
+#wire path { fill: none; stroke-width: 2; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .9s var(--ease), opacity .3s; filter: drop-shadow(0 2px 6px rgba(10, 23, 51, .18)); }
+#wire path.draw { stroke-dashoffset: 0; }
+#wire #wire-halo { stroke: rgba(255, 255, 255, .85); stroke-width: 6; filter: none; }
+#wire .ring { transform-box: fill-box; transform-origin: center; animation: ping 1.6s var(--ease) infinite; }
+@keyframes ping { 0% { transform: scale(.6); opacity: .9; } 100% { transform: scale(2.6); opacity: 0; } }
+#wire g { transition: opacity .3s; }
+
+/* ---------- cierre ---------- */
+.outro { max-width: 1180px; margin: 0 auto; padding: 140px 24px 120px; }
+.outro h2 { font-size: clamp(28px, 3.6vw, 44px); letter-spacing: -.025em; margin: 10px 0 28px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+.card { background: #fff; border-radius: 20px; padding: 24px; box-shadow: var(--shadow); }
+.card h3 { margin: 0 0 14px; font-size: 17px; }
+.card ul { margin: 0; padding-left: 18px; }
+.card li { margin-bottom: 10px; line-height: 1.55; color: var(--ink-2); font-size: 14.5px; }
+.card li b { color: var(--ink); }
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+.reveal.in { opacity: 1; transform: none; }
+footer { text-align: center; color: var(--ink-3); font-size: 12px; padding: 0 24px 40px; }
+
+@media (max-width: 900px) {
+	.topbar { padding: 0 16px; }
+	.brand { display: none; }
+	.hero, .outro, .chapter { padding-left: 16px; padding-right: 16px; }
+	.block { grid-template-columns: 1fr; gap: 0; }
+	.stage { top: 68px; height: 48vh; z-index: 2; }
+	.steps { padding: 4vh 0 30vh; }
+	.step { margin-bottom: 24vh; transform: none; }
+	#wire { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+	*, *::before, *::after { animation: none !important; transition: none !important; }
+	html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+	<div class="brand">incontrol · <b>mailings</b></div>
+	<nav class="chips" id="chips"></nav>
+	<div class="progress" id="progress"></div>
+</header>
+
+<section class="hero">
+	<div class="eyebrow" id="eyebrow"></div>
+	<h1>Observaciones de textos y diseño</h1>
+	<p class="lead">Al maquetar los correos se respetó Figma tal cual. Aquí están los textos con errores o inconsistencias que encontramos, señalados directamente sobre cada correo. Baja para recorrerlos: cada observación se ilumina y apunta al lugar exacto del mailing.</p>
+	<div class="legend" id="legend"></div>
+	<div class="summary" id="summary"></div>
+	<div class="scroll-hint"><span></span>Desplázate para empezar</div>
+</section>
+
+<main id="chapters"></main>
+
+<section class="outro">
+	<div class="eyebrow reveal">Para cerrar</div>
+	<h2 class="reveal">Lo que conviene mirar en conjunto</h2>
+	<div class="cards" id="outro-cards"></div>
+</section>
+<footer id="footer"></footer>
+
+<svg id="wire" aria-hidden="true">
+	<path id="wire-halo" pathLength="1"></path>
+	<path id="wire-path" pathLength="1"></path>
+	<g id="wire-end"><circle class="ring" r="7" fill="none" stroke-width="2"></circle><circle class="dot" r="5"></circle></g>
+</svg>
+
+<script>
+/*__DATA__*/
+
+const PRI = {
+	corregir: { label: 'Corregir', c: 'var(--corregir)', hex: '#e5484d' },
+	revisar: { label: 'Revisar', c: 'var(--revisar)', hex: '#f0a020' },
+	fuente: { label: 'Fuente', c: 'var(--fuente)', hex: '#8e6cef' },
+	corregido: { label: 'Ya corregido', c: 'var(--corregido)', hex: '#2fb37a' },
+};
+const CYAN = '#00e5ff';
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+// palabras mal escritas (faltas de ortografía): se resaltan en cian
+const ERR_SRC = META.erratas.length ? `(${META.erratas.map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})` : null;
+const withErrata = (s) => (ERR_SRC ? esc(s).replace(new RegExp(ERR_SRC, 'g'), '<mark class="errata">$1</mark>') : esc(s));
+const hasErrata = (s) => (ERR_SRC ? new RegExp(ERR_SRC).test(s) : false);
+// **negrita** en los textos del cierre
+const rich = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+const MAIL_W = 632;
+
+document.getElementById('eyebrow').textContent = META.titulo;
+document.getElementById('footer').textContent = `Observaciones ${META.titulo.toLowerCase()} · ${META.fecha}`;
+document.getElementById('outro-cards').innerHTML = META.cierre
+	.filter((c) => c.items.length)
+	.map((c) => `<div class="card reveal"><h3>${esc(c.titulo)}</h3><ul>${c.items.map((t) => `<li>${rich(t)}</li>`).join('')}</ul></div>`)
+	.join('');
+
+// ---------- portada ----------
+document.getElementById('legend').innerHTML =
+	Object.values(PRI).map((p) => `<span class="tag" style="--c:${p.c}"><i></i>${p.label}</span>`).join('') +
+	`<span class="tag" style="--c:${CYAN}"><i></i>Falta de ortografía</span>`;
+
+document.getElementById('summary').innerHTML = DATA.map((m, i) => {
+	const all = m.langs.flatMap((l) => l.items);
+	const n = (k) => all.filter((x) => x.pri === k).length;
+	const keys = Object.keys(PRI).filter((k) => n(k));
+	return `<a class="sum" href="#ch${i}">
+		<div class="n">${String(i + 1).padStart(2, '0')} · ${all.length} observaciones</div>
+		<h3>${m.name}</h3>
+		<div class="bars">${keys.map((k) => `<span style="--c:${PRI[k].c};flex:${n(k)}"></span>`).join('')}</div>
+		<div class="counts">${keys.map((k) => `<span style="--c:${PRI[k].c}"><b>${n(k)}</b> ${PRI[k].label.toLowerCase()}</span>`).join('')}</div>
+	</a>`;
+}).join('');
+
+document.getElementById('chips').innerHTML = DATA.map((m, i) => `<a class="chip" href="#ch${i}" data-ch="${i}">${m.name}</a>`).join('');
+
+// ---------- capítulos ----------
+const blocks = [];
+const main = document.getElementById('chapters');
+DATA.forEach((m, ci) => {
+	const ch = document.createElement('section');
+	ch.className = 'chapter';
+	ch.id = `ch${ci}`;
+	ch.dataset.ch = ci;
+	ch.innerHTML = `<div class="chapter-head reveal">
+		<div class="num">${String(ci + 1).padStart(2, '0')} / ${String(DATA.length).padStart(2, '0')}</div>
+		<h2>${m.name}</h2>
+		<p>${esc(m.desc)}</p>
+		${m.warn ? `<div class="warn">${esc(m.warn)}</div>` : ''}
+	</div>`;
+	m.langs.forEach((L) => {
+		const key = `${m.name}/${L.lang}`;
+		const b = document.createElement('div');
+		b.className = 'block';
+		const title = (MAILS[key].match(/<title>([^<]*)<\/title>/) || [, m.name])[1];
+		b.innerHTML = `<div class="stage"><div class="device">
+				<div class="device-bar"><div class="dots"><i></i><i></i><i></i></div>
+					<div class="subject">${title}</div>
+					<a class="figma" href="${L.figma}" target="_blank" rel="noopener">Figma ↗</a>
+					<span class="lang">${L.lang.toUpperCase()}</span></div>
+				<div class="viewport"><div class="scroller"><iframe title="${esc(m.name)} ${L.lang}" loading="eager"></iframe></div></div>
+			</div></div>
+			<div class="steps">${L.items.map((it, i) => {
+				const color = hasErrata(it.actual) ? CYAN : PRI[it.pri].hex;
+				return `<article class="step" data-i="${i}" style="--c:${color}">
+					<div class="top"><span class="pill" style="--c:${PRI[it.pri].hex}">${PRI[it.pri].label}</span><span class="where">${esc(it.donde)}</span></div>
+					<p class="quote">${withErrata(it.actual)}</p>
+					<p class="what">${withErrata(it.revisar)}</p>
+					<div class="node" style="margin-top:12px">Figma ${esc(it.nodo)}</div>
+					<span class="count">${i + 1}/${L.items.length}</span>
+				</article>`;
+			}).join('')}</div>`;
+		ch.appendChild(b);
+		const st = { el: b, key, items: L.items, ready: false, scale: 1, ty: 0, marks: [], ci };
+		blocks.push(st);
+		const iframe = b.querySelector('iframe');
+		iframe.addEventListener('load', () => setup(st, iframe));
+		iframe.srcdoc = MAILS[key].replace(/src="img:([^"]+)"/g, (s, f) => `src="${IMGS[f]}" data-img="${f}"`);
+	});
+	main.appendChild(ch);
+});
+
+// ---------- localizar cada observación dentro del mailing ----------
+const reFrom = (needle) => new RegExp(needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/ +/g, '[\\s\\u00a0]+'));
+function locate(doc, target) {
+	if (typeof target === 'object' && target.img) {
+		const el = doc.querySelector(`img[data-img^="${target.img}"]`);
+		if (el) el.classList.add('obs-el');
+		return el;
+	}
+	const re = reFrom(target);
+	const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
+	let n;
+	while ((n = walker.nextNode())) {
+		const m = re.exec(n.nodeValue);
+		if (!m) continue;
+		const range = doc.createRange();
+		range.setStart(n, m.index);
+		range.setEnd(n, m.index + m[0].length);
+		const mark = doc.createElement('span');
+		mark.className = 'obs-mark';
+		range.surroundContents(mark);
+		return mark;
+	}
+	// el texto cruza varios elementos: marcar el elemento más profundo que lo contiene
+	const norm = (s) => s.replace(/[\s\u00a0]+/g, ' ');
+	let best = null;
+	for (const el of doc.body.querySelectorAll('*')) {
+		if (norm(el.textContent).includes(norm(target))) best = el;
+	}
+	if (best) best.classList.add('obs-el');
+	return best;
+}
+
+function setup(st, iframe) {
+	const doc = iframe.contentDocument;
+	const style = doc.createElement('style');
+	style.textContent = `
+		html, body { overflow: hidden !important; }
+		.obs-mark, .obs-el { transition: background-color .6s ease, box-shadow .6s ease, outline-color .6s ease; border-radius: 4px; }
+		.obs-mark.on { background-color: color-mix(in srgb, var(--c) 30%, transparent) !important; box-shadow: 0 0 0 3px var(--c); }
+		.obs-el { outline: 3px solid transparent; outline-offset: 3px; }
+		.obs-el.on { outline-color: var(--c); box-shadow: 0 0 0 9999px rgba(10,23,51,0); }
+		img.obs-el.on { outline-offset: -3px; }
+	`;
+	doc.head.appendChild(style);
+	st.marks = st.items.map((it) => {
+		const el = locate(doc, it.target);
+		if (el) el.style.setProperty('--c', hasErrata(it.actual) ? CYAN : PRI[it.pri].hex);
+		return el;
+	});
+	st.iframe = iframe;
+	st.doc = doc;
+	st.scroller = st.el.querySelector('.scroller');
+	st.viewport = st.el.querySelector('.viewport');
+	layout(st);
+	st.ready = true;
+	if (active && active.st === st) activate(st, active.i, true);
+}
+
+function layout(st) {
+	const h = st.doc.documentElement.scrollHeight;
+	st.iframe.style.height = h + 'px';
+	st.h = h;
+	st.scale = Math.min(1, st.viewport.clientWidth / MAIL_W);
+	applyTransform(st);
+}
+function applyTransform(st) {
+	st.scroller.style.transform = `translateY(${st.ty}px) scale(${st.scale})`;
+}
+
+// ---------- paso activo ----------
+let active = null;
+const path = document.getElementById('wire-path');
+const halo = document.getElementById('wire-halo');
+const end = document.getElementById('wire-end');
+
+function activate(st, i, force) {
+	if (!force && active && active.st === st && active.i === i) return;
+	if (active && active.st.ready) active.st.marks.forEach((m) => m && m.classList.remove('on'));
+	document.querySelectorAll('.step.on').forEach((s) => s.classList.remove('on'));
+	active = { st, i };
+	const card = st.el.querySelectorAll('.step')[i];
+	card.classList.add('on');
+	const color = getComputedStyle(card).getPropertyValue('--c').trim();
+	path.style.stroke = color;
+	end.querySelector('.dot').style.fill = color;
+	end.querySelector('.ring').style.stroke = color;
+	// reinicia el trazo de la línea
+	path.classList.remove('draw');
+	halo.classList.remove('draw');
+	void path.getBoundingClientRect();
+	if (!st.ready) return;
+	const el = st.marks[i];
+	if (!el) return;
+	el.classList.add('on');
+	const r = el.getBoundingClientRect();
+	const vh = st.viewport.clientHeight;
+	const cy = (r.top + r.height / 2) * st.scale;
+	const min = Math.min(0, vh - st.h * st.scale);
+	st.ty = Math.max(min, Math.min(0, vh / 2 - cy));
+	applyTransform(st);
+	setTimeout(() => { path.classList.add('draw'); halo.classList.add('draw'); }, 120);
+}
+
+const io = new IntersectionObserver((entries) => {
+	for (const e of entries) {
+		if (!e.isIntersecting) continue;
+		const card = e.target;
+		const st = blocks.find((b) => b.el.contains(card));
+		activate(st, +card.dataset.i);
+	}
+}, { rootMargin: '-48% 0px -48% 0px' });
+document.querySelectorAll('.step').forEach((s) => io.observe(s));
+
+// ---------- dibujar la línea en cada cuadro ----------
+function frame() {
+	let show = false;
+	if (active && active.st.ready && window.innerWidth > 900) {
+		const st = active.st;
+		const el = st.marks[active.i];
+		const card = st.el.querySelectorAll('.step')[active.i];
+		const vp = st.viewport.getBoundingClientRect();
+		const cr = card.getBoundingClientRect();
+		if (el && cr.bottom > 0 && cr.top < innerHeight && vp.bottom > 0) {
+			const fr = st.iframe.getBoundingClientRect();
+			const r = el.getBoundingClientRect();
+			const ex = Math.min(fr.left + r.right * st.scale + 8, vp.right - 10);
+			const ey = fr.top + (r.top + r.height / 2) * st.scale;
+			const sx = cr.left - 2;
+			const sy = cr.top + Math.min(44, cr.height / 2);
+			if (ey > vp.top + 4 && ey < vp.bottom - 4) {
+				const dx = Math.max(40, (sx - ex) * .5);
+				const d = `M ${sx} ${sy} C ${sx - dx} ${sy}, ${ex + dx} ${ey}, ${ex} ${ey}`;
+				path.setAttribute('d', d);
+				halo.setAttribute('d', d);
+				end.setAttribute('transform', `translate(${ex} ${ey})`);
+				show = true;
+			}
+		}
+	}
+	path.style.opacity = show ? 1 : 0;
+	halo.style.opacity = show ? 1 : 0;
+	end.style.opacity = show ? 1 : 0;
+	requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+
+// ---------- navegación, progreso y apariciones ----------
+const chips = [...document.querySelectorAll('.chip')];
+const chipIO = new IntersectionObserver((entries) => {
+	for (const e of entries) if (e.isIntersecting) chips.forEach((c) => c.classList.toggle('on', c.dataset.ch === e.target.dataset.ch));
+}, { rootMargin: '-50% 0px -50% 0px' });
+document.querySelectorAll('.chapter').forEach((c) => chipIO.observe(c));
+const progress = document.getElementById('progress');
+addEventListener('scroll', () => {
+	const max = document.documentElement.scrollHeight - innerHeight;
+	progress.style.width = (scrollY / max) * 100 + '%';
+}, { passive: true });
+const rev = new IntersectionObserver((entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add('in')), { threshold: .15 });
+document.querySelectorAll('.reveal').forEach((r) => rev.observe(r));
+addEventListener('resize', () => blocks.forEach((st) => { if (st.ready) { layout(st); if (active && active.st === st) activate(st, active.i, true); } }));
+</script>
+</body>
+</html>

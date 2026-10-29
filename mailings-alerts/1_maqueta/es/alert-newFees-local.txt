@@ -1,0 +1,89 @@
+OBSERVACIONES DE MAQUETACIÓN
+Mailing:  alert-newFees
+Idioma:   ES (español)
+Maqueta:  1_maqueta/es/alert-newFees-local.html
+Figma:    https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6539-91887
+Fecha:    2026-10-29 (4.ª revisión, después de los ajustes de diseño)
+
+La maqueta respeta Figma tal cual. Los puntos de este archivo son para que diseño/contenido
+los revise y, si corresponde, corrija Figma; luego se vuelve a maquetar.
+
+
+RESUELTO EN FIGMA Y YA APLICADO EN LA MAQUETA
+---------------------------------------------
+4.ª revisión:
+  - "Revise el detalle de las cuotas" → "Revise el detalle de las tarifas en incontrol"
+    (6566:91022). Ya todo el correo dice "tarifas".
+  - "Facturado: ..." pasó debajo del título de cada tabla, igual que en EN (cada tabla mide
+    16px más; el correo pasa de 2496px a 2496px).
+3.ª revisión:
+  - Mensaje principal: "{{#}} nuevos códigos se identificaron en sus facturas más recientes."
+    (6539:91896).
+  - "cuotas" → "tarifas": "Las nuevas tarifas pueden representar:", "Implementación de
+    nuevas tarifas", "Revisar las nuevas tarifas a tiempo..." (6539:92125, 6539:92154,
+    6539:92169).
+  - Última tabla: "Código de tarifa:" → "Código:", igual que las demás.
+  - Ilustración del dashboard con textos nuevos ("tarifas") y títulos de tarjetas en otro
+    tono (imagen e-fees-detail-incontrol-es exportada de nuevo).
+  - Pie: se quitó "Ver en el browser" (el pie mide 26px menos).
+2.ª revisión:
+  - Título "Nuevas Tarifas Detectadas", tabla "Nuevas tarifas", botón "Revisar en incontrol",
+    filas traducidas, franja oscura en Arial.
+
+
+1. ERRATAS Y TEXTOS A REVISAR
+-----------------------------
+1.1  Tuteo mezclado con usted
+     Nodo:   6566:89130 (franja oscura)
+     Texto:  "Conoce más en incontrol.intelica.com"
+     Revisar: el resto del correo trata de usted ("Revise", "¿Necesita…?", "ayudarle").
+
+
+2. FUENTES DISTINTAS DE ARIAL
+-----------------------------
+Ninguna. Todos los textos visibles están en Arial (los textos en Lato están dentro de la
+ilustración del dashboard, que va como imagen).
+
+
+3. DIFERENCIAS CON FIGMA
+------------------------
+Ninguna. El alto total coincide con Figma (2496px) con 1px de diferencia como máximo.
+
+Diferencia de layout respecto a EN (viene así en Figma y se respetó): la segunda línea de
+cada fila ("Penalización - Integridad del Sistema...") ocupa 2 líneas, así que las tablas
+son más altas y el correo mide 2496px (EN: 2352px).
+
+
+
+4. SUGERENCIAS DE MAQUETADOR NO APLICADAS (quedaron como en Figma)
+------------------------------------------------------------------
+4.1  Tarjetas "Las nuevas cuotas pueden representar": la primera separa ícono y texto con 8px
+     (nodo 6539:92127) y las otras tres con 6px (6539:92136, 6539:92146, 6539:92155).
+     Sugerencia: unificar en 8px.
+
+4.2  Botón "Revisar en incontrol" (6539:94063): texto #eef2fc sobre #fa573e tiene contraste
+     aprox. 2.9:1 (WCAG pide 4.5:1). Sugerencia: texto #ffffff.
+
+4.3  Franja "Conoce más en incontrol.intelica.com" (6566:89130): line-height 8px con texto
+     de 12px; Outlook de escritorio puede recortar el texto. Sugerencia: line-height 16px
+     (la franja mantiene 75px de alto).
+
+
+5. LINKS
+--------
+Pendientes para el desarrollador (href="#"):
+  - Botón "Revisar en incontrol"
+  - "Actualizar preferencias"
+  - "desuscribirse"
+
+Enlaces creados con la misma apariencia del texto:
+  - incontrol.intelica.com      -> https://incontrol.intelica.com
+  - clientsuccess@intelica.com  -> mailto:clientsuccess@intelica.com
+  - Logo incontrol              -> https://incontrol.intelica.com/login (como en las referencias; no viene en Figma)
+
+
+6. DATOS DE EJEMPLO
+-------------------
+Tabla "Nuevas tarifas": Mastercard / EUR / 1,000,541.00. Primera tabla:
+"Visa Adquirente | USD 1,100,283.05". En la versión EN son Visa / USD y USD 2,283.05.
+Son datos de muestra que reemplaza el desarrollador; solo informativo.

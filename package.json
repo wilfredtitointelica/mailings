@@ -1,0 +1,17 @@
+{
+  "name": "new-mailings",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "mail:entregar": "node scripts/rutas.mjs --modo entrega",
+    "mail:publicar": "node scripts/rutas.mjs --modo publicar",
+    "img:optimizar": "node scripts/optimizar.mjs"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.5",
+    "sharp-cli": "^6.1.0"
+  },
+  "overrides": {
+    "sharp": "^0.35.5"
+  }
+}
