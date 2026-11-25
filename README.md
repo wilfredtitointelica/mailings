@@ -29,7 +29,7 @@ mailings-alerts/
   4_bucket/dev|qa|prd/en|es/
   img/                 solo .png/.jpg optimizados del proyecto
   trash/               papelera
-  obs/                 observaciones para producto (HTML con fecha, Word)
+  audit/               auditorías de Figma y del HTML (páginas con fecha, Word)
 ref/                   referencias compartidas por todos los proyectos
 scripts/  ambientes.json  package.json
 ```
@@ -72,11 +72,15 @@ Todo ocurre dentro de la carpeta del proyecto:
 | 4 | Tú | Guardas cada HTML devuelto en la carpeta de su idioma y haces los ajustes visuales que falten | `3_integrado/en\|es/<nombre>.html` |
 | 5 | `/publicar-ambientes` | Cambia solo las URLs de imágenes por las de cada ambiente | `4_bucket/dev\|qa\|prd/en\|es/<nombre>.html` |
 
-Hay dos skills auxiliares:
+Hay tres skills auxiliares:
 - `/optimizar-imagenes` optimiza (a `.png` o `.jpg`) imágenes sueltas que se agregan o
   reemplazan después de maquetar.
-- `/observaciones-html` solo corre cuando lo pides. Arma, a partir de los `.txt`, una página de
-  observaciones para producto en formato scrollytelling, dentro de `obs/`.
+- `/auditar-figma` solo corre cuando lo pides. Audita el **diseño de Figma** (textos,
+  espaciados, fuentes) a partir de los `.txt` y arma una página scrollytelling para producto
+  en `audit/`. Se corrige en Figma.
+- `/auditar-html` solo corre cuando lo pides. Audita el **HTML generado** de una etapa
+  (fidelidad con Figma, compatibilidad con clientes de correo, peso, imágenes, links,
+  variables) y arma la misma página en `audit/`. Se corrige en el HTML.
 
 Un mailing solo informativo (sin variables) también pasa por `3_integrado/`, porque se publica
 únicamente desde ahí.
@@ -94,7 +98,7 @@ ambiente del bucket. El archivo se llama igual en ambos idiomas.
 | `4_bucket/dev/`, `qa/`, `prd/` → `en/`, `es/` | `<nombre>.html` final por ambiente e idioma | absolutas del ambiente + `carpetaImagenes` |
 | `img/` | **Solo `.png`/`.jpg` optimizados**, compartidas por ambos idiomas. Las que cambian por idioma llevan sufijo `-en` / `-es`. | — |
 | `trash/` | Descartes. Ningún skill la usa. | — |
-| `obs/` | `observaciones-AAAA-MM-DD.html` (+ `.json`) de `/observaciones-html` y documentos para producto. Nunca se sobrescriben. | — |
+| `audit/` | `auditoria-figma-AAAA-MM-DD.html` y `auditoria-html-AAAA-MM-DD.html` de `/auditar-figma` y `/auditar-html` (solo HTML, con los datos embebidos), las antiguas `observaciones-*.html` y documentos para producto. Nunca se sobrescriben. | — |
 
 En la raíz quedan:
 - `ref/`: maquetas HTML de referencia, en solo lectura. De ahí se toma la forma de construir
@@ -103,6 +107,8 @@ En la raíz quedan:
   - `optimizar.mjs` optimiza PNG/JPG y guarda cada imagen como `.png` o `.jpg`, el que pese menos.
   - `rutas.mjs` hace la entrega y la publicación.
   - `proyecto.mjs` resuelve la carpeta del proyecto.
+  - `auditoria/` es el motor de `/auditar-figma` y `/auditar-html`: plantilla, generador de la
+    página, verificación, revisión estática del HTML y comparación del render con Figma.
 
 ### Configuración — `ambientes.json`
 
@@ -225,24 +231,38 @@ npm run img:optimizar -- --proyecto alerts --dir <carpeta> --umbral 38          
   `.webp` antiguo) y borra la anterior. Si la extensión cambió, actualizar el `src` en las
   maquetas.
 
-### `/observaciones-html` (auxiliar, solo a pedido)
+### Auditorías: `/auditar-figma` y `/auditar-html` (auxiliares, solo a pedido)
 
-Arma una página HTML de observaciones para el equipo de producto a partir de los `.txt` del
-proyecto:
+Las dos arman la misma página scrollytelling, con el motor compartido en `scripts/auditoria/`:
 
 - **Izquierda:** el mailing queda fijo.
 - **Derecha:** pasan las observaciones. Una línea animada apunta al lugar exacto del correo.
-- **Faltas de ortografía:** se resaltan en cian.
 
-**Pide:**
-- El proyecto.
-- Los mailings a incluir, con **casillas**. Cada uno indica si es nuevo o en qué fecha ya se
-  observó, para no repetir los que ya se revisaron.
+| | `/auditar-figma` | `/auditar-html` |
+|---|---|---|
+| Qué audita | El **diseño de Figma** | El **HTML generado** |
+| Dónde se corrige | En Figma (diseño / contenido) | En el HTML (maquetación / dev) |
+| Fuente | Los `.txt` de `/maquetar-figma` + auditoría de espaciados | El HTML de la etapa elegida: `1_maqueta`, `2_entrega`, `3_integrado` o `4_bucket/<env>` |
+| Revisa | Erratas (en cian), frases mal construidas, textos sin traducir o copiados, tú/usted, terminología, fuentes que no son Arial y **espaciados** (siempre a corregir) | Fidelidad con Figma (render medido al pixel), compatibilidad con Outlook/Gmail/iOS, peso < 102 KB, imágenes, links, variables y estructura EN vs ES |
+| Prioridades | corregir · revisar · fuente · ya corregido | error · compatibilidad · accesibilidad · mejora · ya corregido |
+| Salida | `audit/auditoria-figma-AAAA-MM-DD.html` | `audit/auditoria-html-AAAA-MM-DD.html` |
 
-Guarda `<proyecto>/obs/observaciones-AAAA-MM-DD.html` con su `.json` de datos. **Nunca
-sobrescribe**: si ya hay una de ese día, agrega `-2`, `-3`… Es un solo archivo, con las maquetas
-y las imágenes embebidas. Claude no lo ejecuta por su cuenta: se invoca con
-`/observaciones-html`.
+**Piden:** el proyecto, los mailings con **casillas** (cada uno indica si es nuevo o en qué
+fecha ya se auditó) y, en `/auditar-html`, la etapa. `/auditar-html` ofrece además corregir los
+errores que encuentra, con tu aprobación.
+
+Guardan **solo el HTML** en `audit/`, sin `.json`: los datos van embebidos en la página y de
+ahí se sabe qué mailings ya se auditaron. **Nunca sobrescriben**: si ya hay uno de ese día,
+agregan `-2`, `-3`… Es un solo archivo, con los HTML y las imágenes embebidas. Claude no los
+ejecuta por su cuenta. Las páginas antiguas `audit/observaciones-*.html` cuentan como auditorías
+de Figma.
+
+Los scripts de `/auditar-html` también se pueden correr solos:
+
+```
+node scripts/auditoria/revisar-html.cjs --proyecto alerts --mailing alert-newFees --etapa 1_maqueta [--red]
+node scripts/auditoria/comparar-render.cjs --html <archivo.html> --figma <screenshot.png> --out <carpeta>
+```
 
 ## Ejemplo completo
 

@@ -76,7 +76,7 @@ idiomas; lo que cambia es la carpeta.
 | `4_bucket/<env>/en/`, `4_bucket/<env>/es/` | `<nombre>.html` con la URL de cada ambiente `dev`, `qa`, `prd` (lo genera `publicar-ambientes`) |
 | `img/` | **Solo `.png`/`.jpg` optimizados**, compartidas por ambos idiomas ← **este skill las genera aquí** |
 | `trash/` | Papelera del proyecto |
-| `obs/` | Páginas de observaciones (`/observaciones-html`) y documentos para producto |
+| `audit/` | Páginas de auditoría (`/auditar-figma`, `/auditar-html`) y documentos para producto |
 
 ## Preguntas iniciales
 
@@ -87,7 +87,7 @@ Hacerlas juntas antes de empezar:
    - **Si existe**, se trabaja ahí mismo.
    - **Si no existe**, crearlo con `proyecto.json` y las carpetas `1_maqueta/en|es`,
      `2_entrega/en|es`, `3_integrado/en|es`, `4_bucket/dev|qa|prd/en|es`, `img/`, `trash/` y
-     `obs/`, cada una con un `.gitkeep`.
+     `audit/`, cada una con un `.gitkeep`.
 2. **[Obligatorio] Carpeta destino de imágenes en el bucket** (ej. `alerts/`): la subcarpeta de
    `img/` donde se copiarán las imágenes en el repo del bucket. Con ella se arma la URL
    absoluta de `entregar-dev` y `publicar-ambientes`:
@@ -219,6 +219,10 @@ Reglas de exportación:
 - Nombres en kebab-case con prefijo `e-`: `e-logo-incontrol.png`, `e-icon-check.png`.
   No sobrescribir una imagen existente que sea otra imagen; los logos compartidos que ya existan
   en `img/` se reutilizan (no se vuelven a exportar).
+- **Medidas sin decimales**: el exportado a 2x debe tener ancho y alto **pares**, para que a 1x
+  quede entero (ej. 374×249 se ve a 187×124,5 con `height: auto`). Si Figma da un impar (frames
+  con medidas decimales, ej. 124,37), redimensionar el PNG del scratchpad al par más cercano al
+  tamaño de Figma (ej. 374×248) con sharp (`lanczos3`) antes de optimizar, y anotarlo en el `.txt`.
 - En el HTML, `width`/`height` van al tamaño **1x** del diseño (la mitad del exportado a 2x;
   el script muestra el tamaño en su tabla).
 
@@ -229,7 +233,9 @@ Maquetar primero `1_maqueta/en/<nombre>-local.html` y, a partir de ese, generar
 el diseño en español (textos, imágenes con sufijo `-es`, medidas de secciones que cambiaron).
 
 - `<html lang="en">` en la versión en inglés y `<html lang="es">` en la de español; el
-  `<title>` y los `alt` de las imágenes, en el idioma de cada versión.
+  `<title>` y los `alt` de las imágenes, en el idioma de cada versión. **Excepción:** si el
+  mailing reemplaza una plantilla que ya existe en el bucket, se mantiene **su `<title>` original**
+  tal cual (ej. `Reset Password`, igual en EN y ES), no el título de Figma.
 - **Fondo del mailing** (pregunta 3, o `#ffffff` por defecto) en el `<body>` (`bgcolor` +
   `background-color` en su `style`) y en el `table wrapper` (`bgcolor` + `background-color`),
   con el mismo color en ambos.
@@ -263,22 +269,27 @@ el diseño en español (textos, imágenes con sufijo `-es`, medidas de secciones
 
 ## 7. Verificar y resumir
 
-1. **Render** de cada idioma: abrir el HTML con Edge headless y compararlo con el screenshot de
-   Figma de **ese** idioma:
+1. **Render** de cada idioma, comparado con el screenshot de Figma de **ese** idioma:
    ```
-   "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" --headless=new --disable-gpu \
-     --hide-scrollbars --window-size=632,<alto> --screenshot=<scratchpad>/render-<idioma>.png \
-     "file:///C:/christian/new-mailings/mailings-<proyecto>/1_maqueta/<idioma>/<nombre>-local.html"
+   node scripts/auditoria/comparar-render.cjs --html mailings-<proyecto>/1_maqueta/<idioma>/<nombre>-local.html \
+     --figma <scratchpad>/shot-<idioma>.png --out <scratchpad>/cmp-<idioma>
    ```
-   Cortar el render en tramos y revisar espaciados, colores, tamaños, redondeados e imágenes.
-   Además de mirar, **medir con sharp**: por zona (títulos, columnas de tablas, tarjetas, botón,
-   pie) comparar dónde empieza y termina el contenido en x y en y entre el screenshot de Figma
-   y el render. Medir también el **tamaño de cada caja de color** (fondos de íconos, botones,
-   recuadros) buscando su color en ambas imágenes, sobre todo en filas donde el texto ocupa
-   más líneas en un idioma. Toda diferencia mayor a 1px que no sea por el suavizado de la fuente se corrige
-   antes de entregar.
-2. Comprobar en ambos HTML que cada `src` apunta a un `.png`/`.jpg` que existe en `img/`, que
-   no hay `.webp` en `img/` ni en los `src`, y que cada HTML pesa < 102 KB.
+   Renderiza con Edge headless, compara alto total y cada banda de contenido (posición, alto y
+   extensión horizontal) y marca con `<<` lo que difiere más de 1px. Mirar esas bandas en los
+   tramos `figma-NN.png` / `render-NN.png` y revisar además espaciados, colores, tamaños,
+   redondeados e imágenes. Medir también con sharp el **tamaño de cada caja de color** (fondos de
+   íconos, botones, recuadros) buscando su color en ambas imágenes, sobre todo en filas donde el
+   texto ocupa más líneas en un idioma. Toda diferencia mayor a 1px que no sea por el suavizado
+   de la fuente se corrige antes de entregar.
+   - **Cortes de línea**: el navegador no corta después de `/` y Figma sí (ej. "ME/AFR)",
+     "Nuevo/Actualizado"). Si Figma corta ahí, agregar `&#8203;` después de la barra y anotarlo
+     en "Diferencias con Figma" del `.txt`.
+2. Revisión estática de ambos HTML (imágenes en `img/`, sin `.webp`, peso < 102 KB, tablas,
+   fondos, textos, links, estructura y variables EN vs ES):
+   ```
+   node scripts/auditoria/revisar-html.cjs --proyecto <proyecto> --mailing <nombre>
+   ```
+   Corregir los `error` y `compatibilidad` que no sean decisiones de Figma.
 3. Comparar las dos versiones: misma cantidad de filas/comentarios; si no, explicar por qué.
 4. **Archivo de observaciones por idioma**, junto a cada maqueta y con su mismo nombre:
    `1_maqueta/en/<nombre>-local.txt` y `1_maqueta/es/<nombre>-local.txt` (texto plano UTF-8).
@@ -292,6 +303,13 @@ el diseño en español (textos, imágenes con sufijo `-es`, medidas de secciones
       gramaticales, dobles espacios, textos sin traducir, mezcla de idiomas, tuteo/usted
       mezclados, mayúsculas inconsistentes (`incontrol`/`Incontrol`), terminología mezclada y
       textos copiados de otro mailing. Se maquetan **tal cual Figma**; el `.txt` es el aviso.
+      **Espaciados = error a corregir**: auditar siempre los espacios en los textos (dobles,
+      al inicio o al final, que faltan o sobran entre partes, ej. "AI15067-" vs "AI15067 -")
+      y comparar los **bloques repetidos** entre sí (tarjetas, filas, tablas): interlineado,
+      tamaño de fuente, alto, padding y separación deben ser iguales. Para eso, comparar en la
+      metadata los tamaños/posiciones de cada bloque repetido y en `get_design_context` sus
+      `leading`, `text-[…]`, `gap` y `p-[…]`. Cada diferencia se reporta como error a
+      corregir (nodos de cada bloque, valor de cada uno y cuál es el distinto).
    2. **Fuentes distintas de Arial**: nodo, texto y fuente; cómo quedó maquetado.
    3. **Diferencias con Figma** que quedaron en la maqueta y su motivo.
    4. **Sugerencias de maquetador no aplicadas** (quedaron como en Figma).

@@ -328,7 +328,8 @@ footer { color: var(--soft); font-size: .85rem; padding-top: 32px; border-top: 1
 			<a href="#sk-entregar" class="skill-link"><span class="n">2</span>/entregar-dev</a>
 			<a href="#sk-publicar" class="skill-link"><span class="n">3</span>/publicar-ambientes</a>
 			<a href="#sk-optimizar" class="skill-link"><span class="n">+</span>/optimizar-imagenes</a>
-			<a href="#sk-observaciones" class="skill-link"><span class="n">+</span>/observaciones-html</a>
+			<a href="#sk-auditar-figma" class="skill-link"><span class="n">+</span>/auditar-figma</a>
+			<a href="#sk-auditar-html" class="skill-link"><span class="n">+</span>/auditar-html</a>
 		</div>
 		<div class="group">
 			<div class="group-title">Referencia</div>
@@ -386,7 +387,7 @@ footer { color: var(--soft); font-size: .85rem; padding-top: 32px; border-top: 1
 				<div class="row" role="listitem"><span class="name"><i>├─</i><b>4_bucket/</b><small>dev·qa·prd</small></span><span class="desc">versión final por ambiente e idioma</span></div>
 				<div class="row" role="listitem"><span class="name"><i>├─</i><b>img/</b></span><span class="desc">solo .png/.jpg optimizados del proyecto</span></div>
 				<div class="row" role="listitem"><span class="name"><i>├─</i><b>trash/</b></span><span class="desc">papelera</span></div>
-				<div class="row" role="listitem"><span class="name"><i>└─</i><b>obs/</b></span><span class="desc">observaciones para producto (HTML con fecha, Word)</span></div>
+				<div class="row" role="listitem"><span class="name"><i>└─</i><b>audit/</b></span><span class="desc">auditorías de Figma y del HTML (páginas con fecha, Word)</span></div>
 				<div class="row root sep" role="listitem"><span class="name"><b>ref/</b></span><span class="desc">referencias compartidas por todos los proyectos</span></div>
 				<div class="row root" role="listitem"><span class="name"><b>scripts/</b></span><span class="desc">optimizar.mjs · rutas.mjs · proyecto.mjs</span></div>
 				<div class="row root" role="listitem"><span class="name"><b>ambientes.json</b></span><span class="desc">URLs de dev, qa y prd (comunes a todos)</span></div>
@@ -460,11 +461,11 @@ footer { color: var(--soft); font-size: .85rem; padding-top: 32px; border-top: 1
 						<tr><td><span class="mono">4_bucket/</span></td><td><code>dev/</code>, <code>qa/</code>, <code>prd/</code>, cada uno con <code>en/</code> y <code>es/</code>: el HTML final por ambiente e idioma</td><td>Ambiente + <code>carpetaImagenes</code></td></tr>
 						<tr><td><span class="mono">img/</span></td><td><strong>Solo <code>.png</code>/<code>.jpg</code> optimizados</strong> del proyecto. Las que cambian por idioma llevan sufijo <code>-en</code> / <code>-es</code>.</td><td>—</td></tr>
 						<tr><td><span class="mono">trash/</span></td><td>Papelera. Ningún skill la usa.</td><td>—</td></tr>
-						<tr><td><span class="mono">obs/</span></td><td>Observaciones para producto: <code>observaciones-AAAA-MM-DD.html</code> (+ <code>.json</code>) y documentos. Nunca se sobrescriben.</td><td>—</td></tr>
+						<tr><td><span class="mono">audit/</span></td><td>Auditorías: <code>auditoria-figma-AAAA-MM-DD.html</code> y <code>auditoria-html-AAAA-MM-DD.html</code> (solo HTML, con los datos embebidos), las antiguas <code>observaciones-*.html</code> y documentos para producto. Nunca se sobrescriben.</td><td>—</td></tr>
 					</tbody>
 				</table>
 			</div>
-			<p class="note reveal">En la raíz quedan <code>ref/</code> (referencias compartidas), <code>ambientes.json</code> y <code>scripts/</code>: <code>optimizar.mjs</code> (PNG/JPG → <code>.png</code> o <code>.jpg</code> optimizado), <code>rutas.mjs</code> (entrega y publicación) y <code>proyecto.mjs</code> (resuelve la carpeta del proyecto).</p>
+			<p class="note reveal">En la raíz quedan <code>ref/</code> (referencias compartidas), <code>ambientes.json</code> y <code>scripts/</code>: <code>optimizar.mjs</code> (PNG/JPG → <code>.png</code> o <code>.jpg</code> optimizado), <code>rutas.mjs</code> (entrega y publicación), <code>proyecto.mjs</code> (resuelve la carpeta del proyecto) y <code>auditoria/</code> (motor de <code>/auditar-figma</code> y <code>/auditar-html</code>).</p>
 		</section>
 
 		<section id="skills" aria-labelledby="t-skills">
@@ -581,29 +582,57 @@ npm run mail:publicar -- --proyecto alerts --nombre &lt;nombre&gt; --env qa</pre
 npm run img:optimizar -- --proyecto alerts --files &lt;ruta&gt;/e-banner-es.png --force</pre><button class="copy" type="button">Copiar</button></div>
 				</article>
 
-				<article class="skill-card reveal" id="sk-observaciones">
+				<article class="skill-card reveal" id="sk-auditar-figma">
 					<div class="skill-head">
-						<span class="skill-name">/observaciones-html<span class="tag">solo a pedido</span></span>
-						<span class="io">.txt → <b>página scrollytelling</b> en obs/</span>
+						<span class="skill-name">/auditar-figma<span class="tag">solo a pedido</span></span>
+						<span class="io">.txt → <b>auditoría del diseño</b> en audit/</span>
 					</div>
 					<div class="cols">
 						<div>
 							<div class="label">Te pide</div>
 							<ul>
 								<li>El proyecto.</li>
-								<li>Qué mailings incluir, con <strong>casillas</strong>. Cada uno indica si es nuevo o en qué fecha ya se observó.</li>
+								<li>Qué mailings incluir, con <strong>casillas</strong>. Cada uno indica si es nuevo o en qué fecha ya se auditó.</li>
 							</ul>
 						</div>
 						<div>
 							<div class="label">Qué hace</div>
 							<ul>
-								<li>Mailing fijo a la izquierda y observaciones a la derecha, con una línea animada que apunta al lugar del correo.</li>
-								<li>Faltas de ortografía en cian. Un solo HTML, con maquetas e imágenes embebidas.</li>
-								<li>Guarda <code>&lt;proyecto&gt;/obs/observaciones-AAAA-MM-DD.html</code>. Nunca sobrescribe: si ya hay una ese día, agrega <code>-2</code>, <code>-3</code>…</li>
-								<li>Solo corre cuando lo invocas; Claude no lo usa por su cuenta.</li>
+								<li>Errores del <strong>diseño de Figma</strong>, para que diseño y contenido los corrijan en Figma: erratas, textos sin traducir o copiados, tú/usted, fuentes que no son Arial.</li>
+								<li><strong>Espaciados = corregir</strong>: espacios dobles o que faltan y bloques repetidos con distinto interlineado o tamaño.</li>
+								<li>Mailing fijo a la izquierda y observaciones a la derecha, con una línea animada que apunta al lugar del correo. Faltas de ortografía en cian.</li>
+								<li>Guarda <code>&lt;proyecto&gt;/audit/auditoria-figma-AAAA-MM-DD.html</code>. Nunca sobrescribe: si ya hay una ese día, agrega <code>-2</code>, <code>-3</code>…</li>
 							</ul>
 						</div>
 					</div>
+				</article>
+
+				<article class="skill-card reveal" id="sk-auditar-html">
+					<div class="skill-head">
+						<span class="skill-name">/auditar-html<span class="tag">solo a pedido</span></span>
+						<span class="io">HTML de una etapa → <b>auditoría del HTML</b> en audit/</span>
+					</div>
+					<div class="cols">
+						<div>
+							<div class="label">Te pide</div>
+							<ul>
+								<li>El proyecto y la <strong>etapa</strong>: <code>1_maqueta</code>, <code>2_entrega</code>, <code>3_integrado</code> o <code>4_bucket/&lt;env&gt;</code>.</li>
+								<li>Qué mailings incluir, con <strong>casillas</strong>.</li>
+							</ul>
+						</div>
+						<div>
+							<div class="label">Qué hace</div>
+							<ul>
+								<li>Errores del <strong>HTML generado</strong>, que se corrigen en el HTML: diferencias con Figma (render medido al pixel), compatibilidad con Outlook/Gmail/iOS, peso &lt; 102 KB, imágenes, links, variables y estructura EN vs ES.</li>
+								<li>Ofrece corregir los errores encontrados (con tu aprobación) y los marca como corregidos.</li>
+								<li>Misma página scrollytelling, con la línea del HTML de cada hallazgo.</li>
+								<li>Guarda <code>&lt;proyecto&gt;/audit/auditoria-html-AAAA-MM-DD.html</code>.</li>
+							</ul>
+						</div>
+					</div>
+					<div class="cmd"><pre><span class="c"># también se pueden correr solos</span>
+node scripts/auditoria/revisar-html.cjs --proyecto alerts --mailing alert-newFees --etapa 1_maqueta
+node scripts/auditoria/comparar-render.cjs --html &lt;archivo.html&gt; --figma &lt;screenshot.png&gt; --out &lt;carpeta&gt;</pre><button class="copy" type="button">Copiar</button></div>
 				</article>
 			</div>
 		</section>

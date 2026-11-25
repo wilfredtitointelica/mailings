@@ -84,7 +84,9 @@ Figma: nunca recomprimir una imagen de `img/` sobre sí misma (acumula pérdida)
 Si la imagen es nueva, cambió de nombre o **cambió de extensión** (ej. antes `.png` y ahora
 `.jpg`; el script lo recuerda al final), actualizar el `src` en
 `<proyecto>/1_maqueta/en/<nombre>-local.html` y/o `/es/` (`../../img/<archivo>.png` o `.jpg`),
-con su `width`/`height` a 1x (la mitad del tamaño exportado a 2x).
+con su `width`/`height` a 1x (la mitad del tamaño exportado a 2x). El 2x debe tener ancho y
+alto pares; si no, redimensionarlo al par más cercano antes de optimizar (si no, a 1x queda con
+decimales, ej. 187×124,5).
 
 Si el mailing ya fue entregado o integrado (`2_entrega/<idioma>/` o `3_integrado/<idioma>/`),
 avisar y ofrecer cambiar ahí también el nombre o la extensión de esa imagen (solo el `src`, sin
