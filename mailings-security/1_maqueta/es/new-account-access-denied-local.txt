@@ -1,0 +1,42 @@
+Mailing: new-account-access-denied
+Idioma: ES
+Figma: https://www.figma.com/design/kqQqyK8uUEKv69JfVi0YBr/Login?node-id=973-24162
+Fecha: 2026-11-26
+
+1. Erratas y textos a revisar
+-----------------------------
+- Mezcla tú/usted: el título 973:24264 ("…su solicitud…") y los párrafos 973:24266/973:24267 ("Su solicitud…", "Puede enviar…") usan usted; el botón 973:24268 "Solicita acceso nuevamente", la ayuda 973:24270 "Si necesitas ayuda, contacta al soporte de Intelica." y el link 973:24271 "Contacta al soporte" usan tú.
+- Nodo 973:24270 (ayuda): en los demás correos ES dice "Si necesita ayuda, contacte a Soporte de Intelica." Unificar la redacción.
+- Nodo 973:24271 (hyperlink): "Contacta al soporte"; en los demás correos ES dice "Contactar soporte". Unificar.
+- Nodo 973:24266: "para acceder a incontrol para [Example Bank]" repite "para". Revisar la redacción.
+- Nodo 973:24272 (pie): el aviso de confidencialidad está en inglés en el diseño ES. En la maqueta se usó el texto ES que ya está aprobado en el bucket (sin el texto que sobraba: "· En caso de que el usuario incumpla…"). Ese texto usa tú ("Si has recibido…, notifícanos") y el cuerpo del correo usa usted.
+
+Auditoría de espaciados (2026-11-24): se compararon los 5 correos entre sí (tamaños, posiciones, separaciones y espacios en los textos). Las separaciones son iguales en todos: 32px entre ilustración, texto, botón, divisor, ayuda y link, y 16px entre párrafos. No hay espacios dobles ni al inicio; el único espacio sobrante es el del link "Contact support " (EN). La ilustración "Registration" mide 187×124,37 y la de bloqueo 199×135,84: las medidas con decimales arrastran posiciones no enteras al resto del cuerpo. Conviene redondearlas a 124 y 136.
+
+2. Fuentes distintas de Arial
+-----------------------------
+- Nodo 973:24272 (pie, aviso de confidencialidad): el contenedor usa Lato (page/font/fontFamily); los textos internos están en Arial. Maquetado en Arial 10/12.
+
+3. Diferencias con Figma
+------------------------
+- Aviso de confidencialidad (nodo 973:24272): en Figma tiene line-height 0 y no se ve. Se maquetó visible, como en ref/: título Arial bold 10/12, 12px de separación, texto 10/12 justificado en #0a1733 y security@intelica.com subrayado. Decisión aprobada.
+- Ilustración del hero: e-auth-create.png 187×124 (Figma 187×124,37; el PNG a 2x se ajustó de 374×249 a 374×248 para que a 1x no quede en 124,5). Es nueva; reemplaza a la de ref/.
+- Logo del pie: e-logo-footer.png 72×43 (Figma 72×43,2; el PNG a 2x se ajustó de 144×87 a 144×86 para que a 1x no quede en 43,5).
+- Divisor: 31px entre la línea y el texto de ayuda (Figma 32px desde el centro del trazo de 1px). En el render queda igual que en Figma.
+- El título ocupa 2 líneas, como en Figma (46px).
+
+4. Sugerencias de maquetador no aplicadas
+-----------------------------------------
+- Botón de 32px de alto (Figma); para tocarlo cómodo en móvil se recomiendan ~44px.
+
+5. Links
+--------
+- Botón "Solicita acceso nuevamente" → href="#" (pendiente para el dev: la plantilla actual no tiene esta URL)
+- Contact support / Contactar soporte → mailto:support@intelica.com
+- security@intelica.com → mailto:security@intelica.com
+- www.intelica.com → https://www.intelica.com (target="_blank")
+- Logo del encabezado → https://incontrol.intelica.com/login (target="_blank")
+
+6. Datos de ejemplo
+-------------------
+- Se dejaron tal cual Figma (pedido del usuario): [Nombre], [Example Bank] y "21 de octubre de 2026 a las 10:30 AM PET". El dev los reemplaza por sus variables (la plantilla actual del bucket usa {{data.firstName}}).

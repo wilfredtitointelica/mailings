@@ -219,6 +219,13 @@ Reglas de exportación:
 - Nombres en kebab-case con prefijo `e-`: `e-logo-incontrol.png`, `e-icon-check.png`.
   No sobrescribir una imagen existente que sea otra imagen; los logos compartidos que ya existan
   en `img/` se reutilizan (no se vuelven a exportar).
+- **Fondo transparente**: el PNG que exporta Figma (`download_assets`) trae pintados los fondos
+  de los frames padres (página, cuerpo, tarjeta), aunque el nodo no tenga relleno. Comprobar con
+  sharp que tenga píxeles con alfa 0. Si sale opaco, exportar el nodo en **SVG**, borrar todo lo
+  que no sea la rama del nodo (los `rect` de fondo de los frames padres y sus hermanos; dejar
+  `defs`), fijar `viewBox` al tamaño del nodo y renderizarlo a 2x con sharp. Lo que el propio
+  dibujo tiene relleno (pantallas, tarjetas) se conserva. La tabla del optimizador marca
+  `· transparencia` en las que la tienen.
 - **Medidas sin decimales**: el exportado a 2x debe tener ancho y alto **pares**, para que a 1x
   quede entero (ej. 374×249 se ve a 187×124,5 con `height: auto`). Si Figma da un impar (frames
   con medidas decimales, ej. 124,37), redimensionar el PNG del scratchpad al par más cercano al
