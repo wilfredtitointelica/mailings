@@ -1,0 +1,33 @@
+Mailing: security-account-locked-admin
+Idioma: EN
+Figma: https://www.figma.com/design/kqQqyK8uUEKv69JfVi0YBr/Login?node-id=1333-17230
+Fecha: 2026-11-27
+
+1. Erratas y textos a revisar
+-----------------------------
+- Nodo 1333:17333: "bellow" está mal escrito (debe ser "below"); además "to login to incontrol" usa "login" como verbo ("log in"). Revisar.
+- Nodo 1333:17333: solo "Please " va en negrita (Lato Bold); en ES todo el párrafo va en negrita. Unificar.
+- Nodo 1333:17336: dice "copy and paste the following URL into your browser" pero no hay ninguna URL debajo. Agregar la URL en texto o quitar la frase.
+- Nodo 1333:17330: "E-mail"; en ES "Correo electrónico". Revisar si se prefiere "Email".
+- Nodo 1333:17324: el párrafo mide 41px de alto (por los espacios en Lato); los demás párrafos de 2 líneas miden 40px. La caja de datos queda 1px más arriba en la maqueta.
+
+2. Fuentes distintas de Arial
+-----------------------------
+- Nodo 1333:17324: los espacios antes y después de "is blocked" están en Lato.
+- Nodo 1333:17333: "Please " en Lato Bold.
+- Nodo 1333:17336: en Lato Regular 12/16.
+- Nodo 1333:21899 (texto legal del pie): en Figma está en Lato (Bold/Regular 10/12). Maquetado en Arial con el pie de ref/.
+- Todo maquetado en Arial.
+
+3. Diferencias con Figma
+------------------------
+- Pie de página: por pedido se usa el pie de ref/ en todos los mailings (texto #4f5470, link security@intelica.com #2952c4, logo Intelica 54×32 y www.intelica.com #2952c4 en negrita). En Figma el pie va en #0a1733, link #21409a, logo 72×43 y www.intelica.com #0a1733: el render queda ~12px más bajo que Figma por el logo más chico.
+- Nodo 1333:17336: en Arial la frase ocupa 2 líneas (en Lato cabe en 1); el render queda 16px más alto en esa fila.
+
+5. Links pendientes para el dev y enlaces creados
+-------------------------------------------------
+- Botón "Login here" → href="#" (pendiente para el dev).
+- christopher.vega@mail.com (dato de ejemplo) → mailto:christopher.vega@mail.com con la misma apariencia que el texto.
+- Logo de incontrol → https://incontrol.intelica.com/login (target="_blank"), como en ref/.
+- security@intelica.com → mailto:security@intelica.com.
+- www.intelica.com → https://www.intelica.com (target="_blank").

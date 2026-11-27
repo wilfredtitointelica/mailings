@@ -1,0 +1,75 @@
+OBSERVACIONES DE MAQUETACIÓN
+Mailing: alerts-announcements
+Idioma: inglés (en)
+Figma: https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6876-80122
+Frame: "Announcements" (6876:80122)
+Fecha: 2026-11-09
+
+La maqueta respeta Figma tal cual (textos, tamaños, colores, espaciados). Los puntos de abajo
+son para que diseño / contenido revise Figma; no se cambiaron en la maqueta.
+
+
+1. ERRATAS Y TEXTOS A REVISAR
+-----------------------------
+1.1 Nodo 6876:80210 (footer)
+    Texto actual: "Need help understanding these fees?"
+    Revisar: el texto habla de "fees", pero este mailing es de anuncios (announcements).
+    Parece copiado del mailing de tarifas (alert-newFees). Confirmar si aplica aquí.
+    APLICADO (2026-11-10): cambiado a "Need help understanding these announcements?".
+
+
+Auditoría de espaciados (2026-11-09): se compararon las 5 tarjetas entre sí (medidas, padding,
+separaciones, interlineado y espacios en los textos). Son idénticas; no hay espacios dobles, al
+inicio ni al final.
+
+
+2. FUENTES DISTINTAS DE ARIAL
+----------------------------
+Todos los textos visibles usan Arial. Solo como limpieza: el contenedor del texto de la
+franja (nodo 6876:80214, "Learn more at incontrol.intelica.com") tiene Inter como fuente
+base, aunque todos sus tramos visibles son Arial. No afecta la maqueta.
+
+
+3. DIFERENCIAS CON FIGMA
+------------------------
+Ninguna visible. Render comparado con el screenshot de Figma (scripts/auditoria/comparar-render.cjs):
+mismo alto total (2732px) y posiciones iguales con diferencias de 1px como máximo (suavizado de
+fuente).
+Detalle técnico para lograrlo:
+  - "Selected countries (ASIA & ME/AFR)": se agregó un espacio de ancho cero después de "ME/"
+    (&#8203;) para que el texto corte igual que en Figma ("… ME/" + "AFR)"); el navegador no
+    corta después de "/".
+
+
+4. SUGERENCIAS DE MAQUETADOR NO APLICADAS (quedaron como en Figma)
+-------------------------------------------------------------------
+4.1 Texto de 12px en las tarjetas (descripción, columnas, fechas): iOS agranda los textos
+    menores a 13px y puede descuadrar las 3 columnas.
+4.2 Botón "Review in incontrol" de 24px de alto: área táctil chica en móvil (~44px recomendado).
+4.3 Contraste del botón: texto #eef2fc sobre #fa573e ≈ 2.9:1 (mínimo recomendado 4.5:1).
+4.4 Franja "Learn more at…": line-height 8px con texto de 12px; algunos clientes pueden
+    recortar el texto.
+4.5 Dirección en 10.7px: los clientes redondean tamaños decimales de forma distinta.
+
+
+5. LINKS
+--------
+Pendientes para el dev (href="#"):
+  - Botón "Review in incontrol" (x5, uno por tarjeta)
+  - "Update your preferences"
+  - "unsubscribe"
+Enlaces creados (misma apariencia que en Figma):
+  - Logo incontrol -> https://incontrol.intelica.com/login (igual que las referencias)
+  - "incontrol.intelica.com" (franja) -> https://incontrol.intelica.com
+  - "clientsuccess@intelica.com" -> mailto:clientsuccess@intelica.com
+
+
+6. DATOS DE EJEMPLO (informativo)
+---------------------------------
+6.1 Las 5 tarjetas son idénticas (mismo anuncio AI15067); el dev las reemplaza con variables.
+6.2 Dentro de la tarjeta, el título ("Domestic interchange modifications in select Southern and
+    Eastern Africa…"), la jurisdicción ("Selected countries (ASIA & ME/AFR)") y la descripción
+    (Visa / tránsito masivo en Panamá) no hablan del mismo anuncio.
+6.3 Los datos de ejemplo no coinciden con la versión en español: título, descripción
+    (Mastercard Data Integrity Monitoring Program), jurisdicción y la última fecha
+    ("August 29, 2027" aquí vs "Noviembre 29, 2027" en español).

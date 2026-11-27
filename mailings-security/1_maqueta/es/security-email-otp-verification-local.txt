@@ -1,0 +1,34 @@
+Mailing: security-email-otp-verification
+Idioma: ES
+Figma: https://www.figma.com/design/kqQqyK8uUEKv69JfVi0YBr/Login?node-id=1359-30279
+Fecha: 2026-11-27
+
+1. Erratas y textos a revisar
+-----------------------------
+- Nodo I1359:30383;920:326 (link): dice "Contact support " en inglés. Traducir.
+- Nodo 1359:30385 (pie): el texto legal está en inglés. Se maquetó con el texto legal en español de los demás mailings.
+- Nodo 1359:30377: en EN "6-digit code to verify" va en negrita; en ES "código de 6 dígitos para verificar" va sin negrita. Unificar.
+- Nodo 1359:30382: en ES todo el párrafo va en negrita; en EN solo la primera oración. Unificar.
+- Mismas diferencias de estilo que la versión EN (colores #242733 / #2a52c5, esquinas 8px y 4px, márgenes 47/57px).
+
+2. Fuentes distintas de Arial
+-----------------------------
+- Todo el cuerpo está en Lato: nodos 1359:30376, 1359:30377, 1359:30379, 1359:30381, 1359:30382 y I1359:30383;920:326. Maquetado en Arial.
+- Nodo 1359:30385 (texto legal del pie): en Figma está en Lato (Bold/Regular 10/12). Maquetado en Arial con el pie de ref/.
+
+3. Diferencias con Figma
+------------------------
+- Pie de página: por pedido se usa el pie de ref/ en todos los mailings (texto #4f5470, link security@intelica.com #2952c4, logo Intelica 54×32 y www.intelica.com #2952c4 en negrita). En Figma el pie va en #0a1733, link #21409a, logo 72×43 y www.intelica.com #0a1733: el render queda ~12px más bajo que Figma por el logo más chico. En ES el texto legal es el de los demás mailings en español ("Aviso de confidencialidad…").
+- Nodo 1359:30382: en Arial el párrafo de 12px ocupa una línea más que en Lato; el render queda más alto que Figma.
+
+4. Sugerencias de maquetador no aplicadas
+-----------------------------------------
+- Quitar el espacio final de "Contact support " (no aprobado: el texto queda como en Figma; en el navegador el espacio final del link no se ve).
+- Sombra de la tarjeta blanca (box-shadow) (no aprobado: se maqueta sin sombra; en Figma tiene drop shadow).
+
+5. Links pendientes para el dev y enlaces creados
+-------------------------------------------------
+- Link de soporte → mailto:support@intelica.com (como en ref/ y en la maqueta anterior). En este mailing el link va en #2a52c5 como en Figma.
+- Logo de incontrol → https://incontrol.intelica.com/login (target="_blank"), como en ref/.
+- security@intelica.com → mailto:security@intelica.com.
+- www.intelica.com → https://www.intelica.com (target="_blank").

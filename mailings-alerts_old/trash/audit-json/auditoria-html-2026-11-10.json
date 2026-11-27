@@ -1,0 +1,85 @@
+{
+	"tipo": "html",
+	"etapa": "1_maqueta",
+	"titulo": "Mailing de anuncios · 1_maqueta",
+	"fecha": "10 de noviembre de 2026",
+	"mailings": [
+		{
+			"nombre": "alerts-announcements",
+			"descripcion": "Resumen semanal de anuncios con posible impacto financiero. Render igual a Figma al pixel en ambos idiomas (2732 / 2728 px).",
+			"en": {
+				"figma": "https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6876-80122",
+				"items": [
+					{
+						"prioridad": "compatibilidad",
+						"donde": "Tarjetas de anuncio · Peso del correo",
+						"nodo": "líneas 85-457 (tarjeta 1)",
+						"actual": "94,9 KB con 5 tarjetas; cada tarjeta pesa ~17 KB y el resto del correo ~9 KB",
+						"revisar": "Con 6 o más anuncios supera los 102 KB y Gmail recorta el correo: el pie (preferencias y baja) queda detrás de \"Ver mensaje completo\". Casi la mitad del peso son tabulaciones y saltos de línea; sin ellos el correo pesa ~46 KB y admite ~11 tarjetas. Queda como está, a decidir con desarrollo.",
+						"objetivo": {
+							"selector": "td[bgcolor=\"#f2f3f5\"]"
+						}
+					},
+					{
+						"prioridad": "corregido",
+						"donde": "Tarjetas · Jurisdicción",
+						"nodo": "línea 162",
+						"actual": "\"Selected countries (ASIA & ME/AFR)\"",
+						"revisar": "El navegador cortaba antes de \"ME/AFR)\" y Figma corta después de \"ME/\" (no corta tras la barra). Se agregó &#8203; después de \"ME/\": ahora corta igual que Figma.",
+						"objetivo": "Selected countries"
+					},
+					{
+						"prioridad": "mejora",
+						"donde": "Botones y pie · Links",
+						"nodo": "línea 445 · pie",
+						"actual": "7 links con href=\"#\": 5 × \"Review in incontrol\", \"Update your preferences\", \"unsubscribe\"",
+						"revisar": "Pendientes para el dev; es lo esperado en la maqueta.",
+						"objetivo": "Review in incontrol"
+					}
+				]
+			},
+			"es": {
+				"figma": "https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6876-79983",
+				"items": [
+					{
+						"prioridad": "compatibilidad",
+						"donde": "Tarjetas de anuncio · Peso del correo",
+						"nodo": "líneas 85-457 (tarjeta 1)",
+						"actual": "95,4 KB con 5 tarjetas; cada tarjeta pesa ~17 KB y el resto del correo ~9 KB",
+						"revisar": "Con 6 o más anuncios supera los 102 KB y Gmail recorta el correo: el pie (preferencias y baja) queda detrás de \"Ver mensaje completo\". Sin tabulaciones ni saltos de línea pesaría ~46 KB (~11 tarjetas). Queda como está, a decidir con desarrollo.",
+						"objetivo": {
+							"selector": "td[bgcolor=\"#f2f3f5\"]"
+						}
+					},
+					{
+						"prioridad": "mejora",
+						"donde": "Botones y pie · Links",
+						"nodo": "línea 445 · pie",
+						"actual": "7 links con href=\"#\": 5 × \"Revisar en incontrol\", \"Actualizar preferencias\", \"desuscribirse\"",
+						"revisar": "Pendientes para el dev; es lo esperado en la maqueta.",
+						"objetivo": "Revisar en incontrol"
+					}
+				]
+			}
+		}
+	],
+	"cierre": [
+		{
+			"titulo": "Para desarrollo",
+			"items": [
+				"**Cantidad de anuncios:** hasta 5 tarjetas el correo queda bajo los 102 KB de Gmail; desde 6 hay que comprimir el HTML (quitar tabulaciones y saltos de línea) o limitar la lista.",
+				"**Links pendientes:** los botones \"Review in incontrol\" / \"Revisar en incontrol\", \"Update your preferences\" / \"Actualizar preferencias\" y \"unsubscribe\" / \"desuscribirse\".",
+				"**Ajustes sobre los datos de ejemplo:** el &#8203; después de \"ME/\" (EN) y de \"Nuevo/\" (ES) y el &nbsp; de \" Fecha de evaluación…\" (ES) solo sirven para igualar Figma con el texto de muestra. Al poner las variables desaparecen y el corte de línea dependerá del texto real.",
+				"**Imagen nueva por subir al bucket:** e-logo-visa-transparent.png en img/alerts/ (el e-logo-visa.png anterior tiene fondo celeste y no sirve sobre el gris de las tarjetas)."
+			]
+		},
+		{
+			"titulo": "A tener en cuenta",
+			"items": [
+				"**Comparación con Figma:** render de Edge contra el screenshot de Figma, por líneas de contenido; las cajas de color claro (cabeceras, caja de fechas, botón) se midieron aparte por color. Todo coincide con 1px de diferencia como máximo.",
+				"**Celular (390px):** el correo se adapta; las tres columnas se comprimen y los textos ocupan más líneas. Figma no tiene diseño para móvil.",
+				"**Outlook de escritorio para Windows** muestra rectas las esquinas de la caja de fechas y del botón."
+			]
+		}
+	]
+}

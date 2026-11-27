@@ -2,8 +2,8 @@ OBSERVACIONES DE MAQUETACIÓN
 Mailing: alerts-announcements
 Idioma: inglés (en)
 Figma: https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6876-80122
-Frame: "Announcements" (6876:80122)
-Fecha: 2026-11-09
+Frame: "[EN] alerts-announcements" (6876:80122)
+Fecha: 2026-11-26
 
 La maqueta respeta Figma tal cual (textos, tamaños, colores, espaciados). Los puntos de abajo
 son para que diseño / contenido revise Figma; no se cambiaron en la maqueta.
@@ -11,16 +11,12 @@ son para que diseño / contenido revise Figma; no se cambiaron en la maqueta.
 
 1. ERRATAS Y TEXTOS A REVISAR
 -----------------------------
-1.1 Nodo 6876:80210 (footer)
-    Texto actual: "Need help understanding these fees?"
-    Revisar: el texto habla de "fees", pero este mailing es de anuncios (announcements).
-    Parece copiado del mailing de tarifas (alert-newFees). Confirmar si aplica aquí.
-    APLICADO (2026-11-10): cambiado a "Need help understanding these announcements?".
+Sin erratas en esta versión. El footer (nodo 6876:80210) ya dice "Need help understanding
+these announcements?" en Figma.
 
-
-Auditoría de espaciados (2026-11-09): se compararon las 5 tarjetas entre sí (medidas, padding,
-separaciones, interlineado y espacios en los textos). Son idénticas; no hay espacios dobles, al
-inicio ni al final.
+Auditoría de espaciados (2026-11-26): se compararon las 5 tarjetas entre sí (medidas, padding,
+separaciones, interlineado y espacios en los textos). Son idénticas (424px de alto, encabezado
+de 56px); no hay espacios dobles, al inicio ni al final.
 
 
 2. FUENTES DISTINTAS DE ARIAL
@@ -33,12 +29,14 @@ base, aunque todos sus tramos visibles son Arial. No afecta la maqueta.
 3. DIFERENCIAS CON FIGMA
 ------------------------
 Ninguna visible. Render comparado con el screenshot de Figma (scripts/auditoria/comparar-render.cjs):
-mismo alto total (2732px) y posiciones iguales con diferencias de 1px como máximo (suavizado de
-fuente).
-Detalle técnico para lograrlo:
+alto 2733px (Figma 2734px; la diferencia es el redondeo de 221.8px del pie) y sin bandas con
+diferencias mayores a 1px.
+Detalle técnico:
   - "Selected countries (ASIA & ME/AFR)": se agregó un espacio de ancho cero después de "ME/"
     (&#8203;) para que el texto corte igual que en Figma ("… ME/" + "AFR)"); el navegador no
     corta después de "/".
+  - Encabezado nuevo: logo de Intelica a la izquierda (130×28, sin enlace: Figma no indica
+    destino) y logo de Incontrol a la derecha (136×26, con enlace, ver 5).
 
 
 4. SUGERENCIAS DE MAQUETADOR NO APLICADAS (quedaron como en Figma)
@@ -50,6 +48,8 @@ Detalle técnico para lograrlo:
 4.4 Franja "Learn more at…": line-height 8px con texto de 12px; algunos clientes pueden
     recortar el texto.
 4.5 Dirección en 10.7px: los clientes redondean tamaños decimales de forma distinta.
+4.6 Peso del HTML: 97.1 KB, cerca del límite de 102 KB de Gmail. Si el dev agrega más
+    tarjetas o variables largas, Gmail puede recortar el correo ("Mensaje recortado").
 
 
 5. LINKS

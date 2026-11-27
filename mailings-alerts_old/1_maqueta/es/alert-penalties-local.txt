@@ -1,0 +1,103 @@
+OBSERVACIONES DE MAQUETACIÓN
+Mailing:  alert-penalties
+Idioma:   ES (español)
+Maqueta:  1_maqueta/es/alert-penalties-local.html
+Figma:    https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6539-96232
+Fecha:    2026-10-29 (4.ª revisión, después de los ajustes de diseño)
+
+La maqueta respeta Figma tal cual. Los puntos de este archivo son para que diseño/contenido
+los revise y, si corresponde, corrija Figma; luego se vuelve a maquetar.
+
+
+RESUELTO EN FIGMA Y YA APLICADO EN LA MAQUETA
+---------------------------------------------
+4.ª revisión:
+  - Banner: "an Vida" → "an Visa" (6784:85129). Imagen e-banner-overpaying-es exportada de
+    nuevo y alt actualizado.
+  - Fuentes: "Penalidades", "Facturación consecutiva" y la franja oscura ya están en Arial.
+3.ª revisión:
+  - Mensaje principal: "{{#}} esquemas de penalidades se identificaron en sus facturas más
+    recientes." (6539:96241).
+  - Banner rehecho en Figma (6784:85124): se exportó de nuevo como e-banner-overpaying-es.png
+    y se actualizó su alt con los textos nuevos.
+  - Pie: se quitó "Ver en el browser" (el pie mide 26px menos).
+2.ª revisión:
+  - Tabla "Penalidades", "Acciones Recomendadas", "Consulte el motivo", "penalidades",
+    doble espacio y filas traducidas.
+
+
+1. TEXTOS A REVISAR (quedaron como en Figma)
+--------------------------------------------
+1.1  Banner con textos en inglés y una errata
+     Nodos y textos:
+       - 6784:85129  "Across your Mastercard an Visa operations."
+       - 6784:85131  "Learn more" (botón del banner)
+     Revisar: siguen en inglés (antes decían "En tus gastos de Mastercard y Visa." y "Conoce
+     más") y falta la "d" en "an Visa" ("and Visa"). Van dentro de la imagen del banner.
+
+1.2  Tuteo mezclado con usted
+     Nodo:   6566:89138 (franja oscura)
+     Texto:  "Conoce más en incontrol.intelica.com"
+     Revisar: el resto del correo trata de usted ("Consulte", "Analice", "¿Necesita…?",
+     "ayudarle"). El banner también tutea ("Descubre cuánto pagas de más").
+
+1.3  Terminología: el correo es de penalidades pero habla de "tarifas"
+     Nodos y textos:
+       - 6566:89217  "¿Necesita ayuda para comprender estas tarifas?"
+       - Cabeceras de las tablas  "Información sobre tarifas"
+     Revisar: confirmar si se deja así o se ajusta a "penalidades".
+
+
+2. FUENTES DISTINTAS DE ARIAL
+-----------------------------
+2.1  Nodo 6585:88608: cabecera "Monto" de la primera tabla, en Lato Bold. Es la única que
+     queda; las cabeceras de las otras tablas ya están en Arial.
+
+Se maquetó en Arial, como la versión EN.
+
+
+3. DIFERENCIAS CON FIGMA
+------------------------
+Solo la de fuente del punto 2 (Arial en lugar de Lato). El alto total coincide con
+Figma (2288px) con 1px de diferencia como máximo.
+
+Diferencia de layout respecto a EN (viene así en Figma y se respetó): la segunda línea de
+cada fila ("Penalización - Integridad del Sistema...") ocupa 2 líneas, así que las tablas
+son más altas y el correo mide 2288px (EN: 2096px).
+
+
+
+4. SUGERENCIAS DE MAQUETADOR NO APLICADAS (quedaron como en Figma)
+------------------------------------------------------------------
+4.1  Tarjetas "Acciones Recomendadas": la primera separa ícono y texto con 8px
+     (nodo 6539:96473) y las otras tres con 6px (6539:96482, 6539:96492, 6539:96501).
+     Sugerencia: unificar en 8px.
+
+4.2  Botón "Revisar en incontrol" (6539:97202): texto #eef2fc sobre #fa573e tiene contraste
+     aprox. 2.9:1 (WCAG pide 4.5:1). Sugerencia: texto #ffffff.
+
+4.3  Franja "Conoce más en incontrol.intelica.com" (6566:89138): line-height 8px con texto
+     de 12px; Outlook de escritorio puede recortar el texto. Sugerencia: line-height 16px
+     (la franja mantiene 75px de alto).
+
+
+5. LINKS
+--------
+Pendientes para el desarrollador (href="#"):
+  - Botón "Revisar en incontrol"
+  - Banner "Descubre cuánto pagas de más" (toda la imagen; el botón "Learn more" viene
+    dibujado dentro de la imagen)
+  - "Actualizar preferencias"
+  - "desuscribirse"
+
+Enlaces creados con la misma apariencia del texto:
+  - incontrol.intelica.com      -> https://incontrol.intelica.com
+  - clientsuccess@intelica.com  -> mailto:clientsuccess@intelica.com
+  - Logo incontrol              -> https://incontrol.intelica.com/login (como en las referencias; no viene en Figma)
+
+
+6. DATOS DE EJEMPLO
+-------------------
+Primera tabla: "Visa Adquirente | USD 1,100,283.05". En la versión EN es
+"Visa Acquirer | USD 2,283.05". Son datos de muestra que reemplaza el desarrollador;
+solo informativo.

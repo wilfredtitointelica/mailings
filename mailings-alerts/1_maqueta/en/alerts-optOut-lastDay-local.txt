@@ -3,36 +3,38 @@ Mailing:  alerts-optOut-lastDay
 Idioma:   EN (inglés)
 Maqueta:  1_maqueta/en/alerts-optOut-lastDay-local.html
 Figma:    https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6530-92138
-Fecha:    2026-10-29 (4.ª revisión, después de los ajustes de diseño)
+Fecha:    2026-11-26 (maqueta regenerada desde el Figma actual)
 
-La maqueta respeta Figma tal cual. Los puntos de este archivo son para que diseño/contenido
-los revise y, si corresponde, corrija Figma; luego se vuelve a maquetar.
+La maqueta respeta Figma tal cual (no se aplicaron sugerencias). Los puntos de este archivo
+son para que diseño o contenido los revise y, si corresponde, corrija Figma; luego se vuelve
+a maquetar.
 
 
-RESUELTO EN FIGMA Y YA APLICADO EN LA MAQUETA
----------------------------------------------
-4.ª revisión:
-  - Sin cambios en Figma para este mailing.
-3.ª revisión:
-  - Ilustración del dashboard: los títulos de las tarjetas cambiaron de tono (misma imagen que
-    freeTrial, e-optout-dashboard-en, exportada de nuevo).
-  - Pie: se quitó "View email in browser" (el pie mide 26px menos).
-2.ª revisión:
-  - Título "Opt-out service alert" (6755:85083), erratas "oput-out" y "wether" corregidas,
-    punto final en "What happened?", "Last day to opt-out" (6556:81702).
+CAMBIOS DE FIGMA APLICADOS EN ESTA VERSIÓN
+------------------------------------------
+  - Encabezado: ahora va el logo de Intelica a la izquierda y el de incontrol a la derecha
+    (antes era un solo logo centrado). Mide 92px de alto.
+  - "What happened?" (6530:92171): texto nuevo, "The deadline to opt out of this service is
+    approaching. ...". Ya no es el texto copiado de alerts-optOut-freeTrial.
 
 
 1. ERRATAS Y TEXTOS A REVISAR
 -----------------------------
-1.1  Textos copiados de otro mailing
-     Nodos y textos:
-       - 6530:92171  "The free trial period of the new opt-out service is about to begin..."
-       - 6530:92174  "If no action is taken before the opt-out deadline..."
-     Revisar: el frame se llama "Upcoming Opt-Out Services - Last Day" y el hito activo es
-     "Last day to opt-out", pero los párrafos siguen siendo los del aviso de periodo de prueba
-     (alerts-optOut-freeTrial), palabra por palabra. Confirmar los textos de este mailing.
+1.1  Párrafo de "Why is this important?" igual al de otro mailing
+     Nodo:   6530:92174
+     Texto:  "If no action is taken before the opt-out deadline, this service may begin
+             generating recurring charges. / Reviewing optional services periodically..."
+     Revisar: es idéntico al de alerts-optOut-freeTrial. Confirmar que aplica también al aviso
+     de último día.
 
-1.2  Texto de ayuda sobre "fees"
+1.2  "opt-out" con guion usado como verbo
+     Nodos y textos:
+       - 6556:81702  "Last day to opt-out"
+       - 6530:92171  "The deadline to opt out of this service..."
+     Revisar: como verbo se escribe "opt out" (sin guion), como en 6530:92171; "opt-out" con
+     guion es el sustantivo o adjetivo. El mismo correo usa las dos formas.
+
+1.3  Texto de ayuda sobre "fees"
      Nodo:   6566:89197
      Texto:  "Need help understanding these fees?"
      Revisar: es el texto de alert-newFees; este correo trata de un servicio opt-out.
@@ -40,13 +42,15 @@ RESUELTO EN FIGMA Y YA APLICADO EN LA MAQUETA
 
 2. FUENTES DISTINTAS DE ARIAL
 -----------------------------
-Ninguna. Todos los textos visibles están en Arial (los textos en Lato están dentro de la
-ilustración del dashboard, que va como imagen).
+2.1  Franja "Learn more at incontrol.intelica.com" (6566:89098): el nodo tiene Inter como
+     fuente base, pero sus textos visibles están en Arial. Se maquetó en Arial.
+Los textos en Lato están dentro de la ilustración del dashboard, que va como imagen.
 
 
 3. DIFERENCIAS CON FIGMA
 ------------------------
-Ninguna. El alto total coincide con Figma (1770px) con 1px de diferencia como máximo.
+Ninguna. El alto total coincide con Figma (1772px) con 1px de diferencia. Solo la banda de la
+ilustración marca 2px de alto más por el suavizado del borde de la imagen.
 
 Nota técnica: la línea punteada de la línea de tiempo con sus 3 puntos de color
 (nodo 6556:81684) va como una imagen (e-timeline-track-step2.png, 542×16, con el 2.º punto
@@ -58,15 +62,17 @@ están maquetadas en HTML.
 4. SUGERENCIAS DE MAQUETADOR NO APLICADAS (quedaron como en Figma)
 ------------------------------------------------------------------
 4.1  Botón "Review in incontrol" (6530:92168): texto #eef2fc sobre #fa573e tiene contraste
-     aprox. 2.9:1 (WCAG pide 4.5:1). Sugerencia: texto #ffffff.
+     aprox. 2.9:1 (WCAG pide 4.5:1).
 
 4.2  Franja "Learn more at incontrol.intelica.com" (6566:89098): line-height 8px con texto
-     de 12px; Outlook de escritorio puede recortar el texto. Sugerencia: line-height 16px
-     (la franja mantiene 75px de alto).
+     de 12px; Outlook de escritorio puede recortar el texto.
 
 4.3  Ilustración del dashboard (6568:96082): los textos de las etiquetas quedan dentro de la
      imagen. Si las imágenes no cargan solo se ve el alt "Opt-Out Services Dashboard in
      incontrol". Es la misma imagen de alerts-optOut-freeTrial (e-optout-dashboard-en.png).
+
+4.4  Dirección del pie (6566:89102) en 10.7px: se dejó así; cada cliente redondea el decimal
+     distinto.
 
 
 5. LINKS

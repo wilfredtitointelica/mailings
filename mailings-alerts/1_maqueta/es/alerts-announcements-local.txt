@@ -2,8 +2,8 @@ OBSERVACIONES DE MAQUETACIÓN
 Mailing: alerts-announcements
 Idioma: español (es)
 Figma: https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6876-79983
-Frame: "Anuncios" (6876:79983)
-Fecha: 2026-11-09
+Frame: "[ES] alerts-announcements" (6876:79983)
+Fecha: 2026-11-26
 
 La maqueta respeta Figma tal cual (textos, tamaños, colores, espaciados). Los puntos de abajo
 son para que diseño / contenido revise Figma; no se cambiaron en la maqueta.
@@ -11,36 +11,36 @@ son para que diseño / contenido revise Figma; no se cambiaron en la maqueta.
 
 1. ERRATAS Y TEXTOS A REVISAR
 -----------------------------
-1.1 "Tipo de impacto" (nodos 6879:80111, 6879:80357, 6879:80406, 6879:80455, 6879:80504)
+1.1 Nodo 6876:80071 (footer)
+    Texto actual: "¿Necesita ayuda para comprender estas anuncios?"
+    Revisar: concordancia de género; "anuncios" es masculino ("estos anuncios").
+    Se maquetó tal cual Figma.
+
+1.2 "Tipo de impacto" (nodos 6879:80111, 6879:80357, 6879:80406, 6879:80455, 6879:80504)
     Texto actual: "Edito Nuevo/Actualizado"
     Revisar: "Edito" no es una palabra correcta en este contexto (en inglés es "New/Updated
     Edit"). Confirmar el término en español.
 
-1.2 "Jurisdicción" (nodos 6879:80113, 6879:80361, 6879:80410, 6879:80459, 6879:80508)
+1.3 "Jurisdicción" (nodos 6879:80113, 6879:80361, 6879:80410, 6879:80459, 6879:80508)
     Texto actual: "America Latina (Países seleccionados)"
     Revisar: falta la tilde en "América" (la descripción sí la lleva).
 
-1.3 [CORREGIR - espaciado] Título de las tarjetas 2 a 5 (nodos 6879:80350/80351, 6879:80399/80400,
+1.4 [CORREGIR - espaciado] Título de las tarjetas 2 a 5 (nodos 6879:80350/80351, 6879:80399/80400,
     6879:80448/80449, 6879:80497/80498)
     Texto actual: "AI15067- Lanzamiento de Visa Infinite…" (sin espacio antes del guion)
     En la tarjeta 1 (6876:80266) es "AI15067 - Lanzamiento…" (con espacio).
-    Además, en las tarjetas 2 a 5 "AI15067" tiene interlineado de 24px (encabezado de 40px)
-    y en la tarjeta 1 de 20px (encabezado de 36px). Revisar cuál es el correcto y unificar.
+    Además, en las tarjetas 2 a 5 "AI15067" tiene interlineado de 24px (encabezado de 40px,
+    tarjeta de 424px) y en la tarjeta 1 de 20px (encabezado de 36px, tarjeta de 420px).
+    Revisar cuál es el correcto y unificar.
 
-1.4 [CORREGIR - espaciado] Fila de fechas 4 (nodos 6878:152577, 6879:80379, 6879:80428, 6879:80477, 6879:80526)
+1.5 [CORREGIR - espaciado] Fila de fechas 4 (nodos 6878:152577, 6879:80379, 6879:80428, 6879:80477, 6879:80526)
     Texto actual: " Fecha de evaluación para el grupo 1." (empieza con un espacio)
     Revisar: quitar el espacio inicial; se ve desplazado respecto a las demás filas.
 
-1.5 Fechas (columna izquierda de la caja gris, todas las tarjetas)
+1.6 Fechas (columna izquierda de la caja gris, todas las tarjetas)
     Texto actual: "Febrero 1, 2027", "Marzo 1, 2027"…
     Revisar: formato de fecha en inglés (mes día, año) y mes con mayúscula. En español
     lo habitual es día-mes-año con el mes en minúscula.
-
-1.6 Nodo 6876:80071 (footer)
-    Texto actual: "¿Necesita ayuda para comprender estas tarifas?"
-    Revisar: habla de "tarifas", pero este mailing es de anuncios. Parece copiado del mailing
-    de tarifas (alert-newFees).
-    APLICADO (2026-11-10): cambiado a "¿Necesita ayuda para comprender estos anuncios?".
 
 1.7 Tuteo / usted mezclados
     Nodo 6876:80075 (franja): "Conoce más en" -> tuteo.
@@ -52,10 +52,9 @@ son para que diseño / contenido revise Figma; no se cambiaron en la maqueta.
     Revisar terminología (anglicismo; lo habitual es "darse de baja" / "cancelar la
     suscripción").
 
-
-Auditoría de espaciados (2026-11-09): se compararon las 5 tarjetas entre sí (medidas, padding,
+Auditoría de espaciados (2026-11-26): se compararon las 5 tarjetas entre sí (medidas, padding,
 separaciones, interlineado y espacios en los textos). Los cuerpos son iguales; las únicas
-diferencias son 1.3 y 1.4. Los espacios entre secciones coinciden con la versión en inglés.
+diferencias son 1.4 y 1.5. Los espacios entre secciones coinciden con la versión en inglés.
 
 
 2. FUENTES DISTINTAS DE ARIAL
@@ -67,15 +66,17 @@ base, aunque todos sus tramos visibles son Arial. No afecta la maqueta.
 
 3. DIFERENCIAS CON FIGMA
 ------------------------
-Ninguna visible. Render comparado con el screenshot de Figma: mismo alto total (2728px) y
-posiciones iguales con diferencias de 1px como máximo (suavizado de fuente).
+Ninguna visible. Render comparado con el screenshot de Figma: alto 2729px (Figma 2730px; la
+diferencia es el redondeo de 221.8px del pie) y sin bandas con diferencias mayores a 1px.
 Detalles técnicos para lograrlo:
   - "Edito Nuevo/Actualizado": se agregó un espacio de ancho cero después de "Nuevo/"
     (&#8203;) para que el texto corte en dos líneas igual que en Figma ("Edito Nuevo/" +
     "Actualizado"); el navegador no corta después de "/".
   - El espacio inicial de " Fecha de evaluación para el grupo 1." se mantuvo con &nbsp;
-    para que se vea igual que en Figma (ver 1.4).
-  - Encabezados de las tarjetas 2 a 5 con interlineado de 24px, como en Figma (ver 1.3).
+    para que se vea igual que en Figma (ver 1.5).
+  - Encabezados de las tarjetas 2 a 5 con interlineado de 24px, como en Figma (ver 1.4).
+  - Encabezado nuevo: logo de Intelica a la izquierda (130×28, sin enlace: Figma no indica
+    destino) y logo de Incontrol a la derecha (136×26, con enlace, ver 5).
 
 
 4. SUGERENCIAS DE MAQUETADOR NO APLICADAS (quedaron como en Figma)
@@ -87,6 +88,7 @@ Detalles técnicos para lograrlo:
 4.4 Franja "Conoce más en…": line-height 8px con texto de 12px; algunos clientes pueden
     recortar el texto.
 4.5 Dirección en 10.7px: los clientes redondean tamaños decimales de forma distinta.
+4.6 Peso del HTML: 94.0 KB, cerca del límite de 102 KB de Gmail.
 
 
 5. LINKS

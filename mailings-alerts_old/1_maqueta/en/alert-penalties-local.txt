@@ -1,0 +1,82 @@
+OBSERVACIONES DE MAQUETACIÓN
+Mailing:  alert-penalties
+Idioma:   EN (inglés)
+Maqueta:  1_maqueta/en/alert-penalties-local.html
+Figma:    https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6529-86035
+Fecha:    2026-10-29 (4.ª revisión, después de los ajustes de diseño)
+
+La maqueta respeta Figma tal cual. Los puntos de este archivo son para que diseño/contenido
+los revise y, si corresponde, corrija Figma; luego se vuelve a maquetar.
+
+
+RESUELTO EN FIGMA Y YA APLICADO EN LA MAQUETA
+---------------------------------------------
+4.ª revisión:
+  - Banner: "you´re" → "you're" (6784:85116) y "an Vida" → "an Visa" (6784:85117). Imagen
+    e-banner-overpaying-en exportada de nuevo y alt actualizado.
+3.ª revisión:
+  - Banner "Find out what you're overpaying" rehecho en Figma (6784:85112): se exportó de
+    nuevo como e-banner-overpaying-en.png y se actualizó su alt con los textos nuevos.
+  - Pie: se quitó "View email in browser" (el pie mide 26px menos).
+2.ª revisión:
+  - Errata "healps" corregida ("helps", 6529:86273) y doble espacio después de "{{#}}".
+
+
+1. ERRATAS Y TEXTOS A REVISAR
+-----------------------------
+1.1  Errata en el banner
+     Nodo:   6784:85117
+     Texto:  "Across your Mastercard an Visa operations."
+     Revisar: "Vida" ya se corrigió a "Visa", pero falta la "d": debería ser "and Visa".
+     Va dentro de la imagen del banner.
+
+1.2  Título del banner sin punto final
+     Nodo:   6784:85116
+     Texto:  "Find out what you're overpaying"
+     Revisar: antes terminaba con punto. El apóstrofo ya está corregido.
+
+
+2. FUENTES DISTINTAS DE ARIAL
+-----------------------------
+Ninguna. Todos los textos visibles están en Arial.
+
+
+3. DIFERENCIAS CON FIGMA
+------------------------
+Ninguna. El alto total coincide con Figma (2096px) con 1px de diferencia como máximo.
+
+
+4. SUGERENCIAS DE MAQUETADOR NO APLICADAS (quedaron como en Figma)
+------------------------------------------------------------------
+4.1  Tarjetas "Recommended Actions": la primera separa ícono y texto con 8px
+     (nodo 6529:86276) y las otras tres con 6px (6529:86285, 6529:86295, 6529:86304).
+     Sugerencia: unificar en 8px.
+
+4.2  Botón "Review in incontrol" (6529:86054): texto #eef2fc sobre #fa573e tiene contraste
+     aprox. 2.9:1 (WCAG pide 4.5:1). Sugerencia: texto #ffffff.
+
+4.3  Franja "Learn more at incontrol.intelica.com" (6566:89082): line-height 8px con texto
+     de 12px; Outlook de escritorio puede recortar el texto. Sugerencia: line-height 16px
+     (la franja mantiene 75px de alto).
+
+
+5. LINKS
+--------
+Pendientes para el desarrollador (href="#"):
+  - Botón "Review in incontrol"
+  - Banner "Find out what you're overpaying" (toda la imagen; el botón "Learn more" viene
+    dibujado dentro de la imagen)
+  - "Update your preferences"
+  - "unsubscribe"
+
+Enlaces creados con la misma apariencia del texto:
+  - incontrol.intelica.com      -> https://incontrol.intelica.com
+  - clientsuccess@intelica.com  -> mailto:clientsuccess@intelica.com
+  - Logo incontrol              -> https://incontrol.intelica.com/login (como en las referencias; no viene en Figma)
+
+
+6. DATOS DE EJEMPLO
+-------------------
+Primera tabla: "Visa Acquirer | USD 2,283.05". En la versión ES es
+"Visa Adquirente | USD 1,100,283.05". Son datos de muestra que reemplaza el desarrollador;
+solo informativo.

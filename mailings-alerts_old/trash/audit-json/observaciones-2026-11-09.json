@@ -1,0 +1,123 @@
+{
+	"titulo": "Mailing de anuncios",
+	"fecha": "9 de noviembre de 2026",
+	"erratas": [
+		"America"
+	],
+	"mailings": [
+		{
+			"nombre": "alerts-announcements",
+			"descripcion": "Resumen semanal de anuncios con posible impacto financiero para la institución.",
+			"en": {
+				"figma": "https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6876-80122",
+				"items": [
+					{
+						"prioridad": "corregir",
+						"donde": "Bloque de ayuda",
+						"nodo": "6876:80210",
+						"actual": "\"Need help understanding these fees?\"",
+						"revisar": "Habla de \"fees\", pero este correo es de anuncios. Parece copiado del correo de cuotas (alert-newFees).",
+						"objetivo": "Need help understanding these fees?"
+					}
+				]
+			},
+			"es": {
+				"figma": "https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6876-79983",
+				"items": [
+					{
+						"prioridad": "corregir",
+						"donde": "Tarjetas · Tipo de impacto",
+						"nodo": "6879:80111 · 6879:80357 · 6879:80406 · 6879:80455 · 6879:80504",
+						"actual": "\"Edito Nuevo/Actualizado\"",
+						"revisar": "\"Edito\" no es correcto aquí (en inglés dice \"New/Updated Edit\"). Confirmar el término en español.",
+						"objetivo": "Edito Nuevo/"
+					},
+					{
+						"prioridad": "corregir",
+						"donde": "Tarjetas · Jurisdicción",
+						"nodo": "6879:80113 · 6879:80361 · 6879:80410 · 6879:80459 · 6879:80508",
+						"actual": "\"America Latina (Países seleccionados)\"",
+						"revisar": "Falta la tilde: \"América\". La descripción de la misma tarjeta sí la lleva.",
+						"objetivo": "America Latina"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Tarjetas · Título del anuncio",
+						"nodo": "6876:80266 · 6879:80350 · 6879:80399 · 6879:80448 · 6879:80497",
+						"actual": "\"AI15067 - Lanzamiento...\" / \"AI15067- Lanzamiento...\"",
+						"revisar": "La tarjeta 1 lleva espacio antes del guion; las tarjetas 2 a 5 no. Además, el título de las tarjetas 2 a 5 tiene más interlineado, así que su cabecera es 4px más alta. Unificar.",
+						"objetivo": "Lanzamiento de Visa Infinite"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Tarjetas · Fechas",
+						"nodo": "6878:152577 · 6879:80379 · 6879:80428 · 6879:80477 · 6879:80526",
+						"actual": "\" Fecha de evaluación para el grupo 1.\"",
+						"revisar": "Empieza con un espacio, por eso se ve corrido respecto a las demás filas.",
+						"objetivo": "Fecha de evaluación para el grupo 1."
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Tarjetas · Fechas",
+						"nodo": "Columna de fechas de todas las tarjetas",
+						"actual": "\"Febrero 1, 2027\", \"Marzo 1, 2027\"...",
+						"revisar": "Formato de fecha en inglés (mes día, año) y mes con mayúscula. En español lo habitual es \"1 de febrero de 2027\".",
+						"objetivo": "Febrero 1, 2027"
+					},
+					{
+						"prioridad": "corregir",
+						"donde": "Bloque de ayuda",
+						"nodo": "6876:80071",
+						"actual": "\"¿Necesita ayuda para comprender estas tarifas?\"",
+						"revisar": "Habla de \"tarifas\", pero este correo es de anuncios. Parece copiado del correo de cuotas.",
+						"objetivo": "¿Necesita ayuda para comprender estas tarifas?"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Franja oscura",
+						"nodo": "6876:80075",
+						"actual": "\"Conoce más en incontrol.intelica.com\"",
+						"revisar": "Trata de \"tú\"; el resto del correo trata de \"usted\" (\"encontrará\", \"¿Necesita...?\", \"ayudarle\").",
+						"objetivo": "Conoce más en"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Pie del correo",
+						"nodo": "6876:80077",
+						"actual": "\"Actualizar preferencias o desuscribirse.\"",
+						"revisar": "\"desuscribirse\" es un anglicismo. Lo habitual es \"darse de baja\" o \"cancelar la suscripción\".",
+						"objetivo": "desuscribirse"
+					}
+				]
+			}
+		}
+	],
+	"cierre": [
+		{
+			"titulo": "Se repite en varios correos",
+			"items": [
+				"**\"Conoce más en incontrol.intelica.com\"** en la franja oscura: el tuteo ya se había observado en los demás correos de alertas en español.",
+				"**\"these fees\" / \"estas tarifas\"** en el bloque de ayuda: ya se había observado en otros correos que no hablan de cuotas."
+			]
+		},
+		{
+			"titulo": "Sugerencias de diseño (opcionales)",
+			"items": [
+				"**Texto de las tarjetas en 12px:** en iPhone los textos menores a 13px se agrandan solos y pueden descuadrar las 3 columnas. Propuesta: 14px.",
+				"**Botón \"Review in incontrol\" / \"Revisar en incontrol\":** mide 24px de alto, poco para tocarlo en el celular (lo recomendado es unos 44px).",
+				"**Texto del botón naranja:** el celeste claro sobre naranja se lee con dificultad (contraste 2,9:1; lo recomendado es 4,5:1). Propuesta: texto blanco o en negrita.",
+				"**Franja oscura:** interlineado de 8px para texto de 12px; en algunos correos se puede cortar. Propuesta: 16px.",
+				"**Dirección del pie en 10,7px:** cada correo redondea los decimales distinto. Propuesta: 11px."
+			]
+		},
+		{
+			"titulo": "A tener en cuenta",
+			"items": [
+				"**Outlook de escritorio para Windows** muestra rectas las esquinas de la caja gris de fechas y del botón.",
+				"**Links pendientes:** los 5 botones, \"Update your preferences\" / \"Actualizar preferencias\" y \"unsubscribe\" / \"desuscribirse\" los completa desarrollo.",
+				"**Datos de ejemplo:** las 5 tarjetas repiten el mismo anuncio, y título, jurisdicción y descripción no hablan del mismo anuncio. Además, los datos no coinciden entre idiomas (por ejemplo, la última fecha es \"August 29\" en inglés y \"Noviembre 29\" en español).",
+				"**Peso del correo:** cada versión pesa unos 95 KB y Gmail recorta los correos de más de 102 KB. Si los anuncios reales tienen textos más largos o más tarjetas, conviene revisarlo con desarrollo."
+			]
+		}
+	]
+}

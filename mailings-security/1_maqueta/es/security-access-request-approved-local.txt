@@ -1,0 +1,33 @@
+Mailing: security-access-request-approved
+Idioma: ES
+Figma: https://www.figma.com/design/kqQqyK8uUEKv69JfVi0YBr/Login?node-id=1307-13539
+Fecha: 2026-11-27
+
+1. Erratas y textos a revisar
+-----------------------------
+- Nodo 1307:13641 (título): la caja de texto mide 330px de ancho; en los demás mailings los títulos ocupan 470px. Se maquetó con 330px para respetar el corte. Revisar si es intencional.
+- Nodo 1307:13644: "10:30 a. m. PET"; en los demás mailings ES se escribe "10:30 AM PET". Unificar.
+
+2. Fuentes distintas de Arial
+-----------------------------
+- Nodo 1330:16016 (texto legal del pie): en Figma está en Lato (Bold/Regular 10/12). Maquetado en Arial con el pie de ref/.
+
+3. Diferencias con Figma
+------------------------
+- Pie de página: por pedido se usa el pie de ref/ en todos los mailings (texto #4f5470, link security@intelica.com #2952c4, logo Intelica 54×32 y www.intelica.com #2952c4 en negrita). En Figma el pie va en #0a1733, link #21409a, logo 72×43 y www.intelica.com #0a1733: el render queda ~12px más bajo que Figma por el logo más chico. En ES el texto legal es el de los demás mailings en español ("Aviso de confidencialidad…").
+
+4. Sugerencias de maquetador no aplicadas
+-----------------------------------------
+- Quitar el espacio final de "Contact support " (no aprobado: el texto queda como en Figma; en el navegador el espacio final del link no se ve).
+
+5. Links pendientes para el dev y enlaces creados
+-------------------------------------------------
+- Botón "Crear Contraseña" → href="#" (pendiente para el dev).
+- Link de soporte → mailto:support@intelica.com (como en ref/ y en la maqueta anterior).
+- Logo de incontrol → https://incontrol.intelica.com/login (target="_blank"), como en ref/.
+- security@intelica.com → mailto:security@intelica.com.
+- www.intelica.com → https://www.intelica.com (target="_blank").
+
+6. Datos de ejemplo
+-------------------
+- Fecha de ejemplo: EN "October 17, 2026 at 10:30 AM PET" / ES "17 de octubre de 2026 a las 10:30 a. m. PET".

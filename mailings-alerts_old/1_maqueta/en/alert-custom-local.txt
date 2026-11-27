@@ -1,0 +1,90 @@
+OBSERVACIONES DE MAQUETACIÓN
+Mailing:  alert-custom
+Idioma:   EN (inglés)
+Maqueta:  1_maqueta/en/alert-custom-local.html
+Figma:    https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6530-76336
+Fecha:    2026-10-29 (4.ª revisión, después de los ajustes de diseño)
+
+La maqueta respeta Figma tal cual. Los puntos de este archivo son para que diseño/contenido
+los revise y, si corresponde, corrija Figma; luego se vuelve a maquetar.
+
+
+RESUELTO EN FIGMA Y YA APLICADO EN LA MAQUETA
+---------------------------------------------
+4.ª revisión:
+  - Sin cambios en Figma para este mailing.
+3.ª revisión:
+  - Doble espacio entre "{{fee.name}}" y "{{increases more than 15%}}" corregido (6530:76370).
+  - Pie: se quitó "View email in browser" (el pie mide 26px menos).
+2.ª revisión:
+  - Saludo con coma: "Hi {{data.firstName}}," (6530:76346).
+  - Mayúsculas de la tabla unificadas: "Configured threshold", "Current value",
+    "Billing date".
+
+
+1. TEXTOS A REVISAR (quedaron como en Figma)
+--------------------------------------------
+1.1  Palabra "fee" en negrita junto a las variables
+     Nodo:   6530:76347
+     Texto:  "The monitored fee {{FeeCode}} - {{FeeName}} matched..." ("fee" va en negrita)
+     Revisar: en ES solo van en negrita las variables ("La tarifa monitoreada {{FeeCode}} -
+     {{FeeName}}"). Confirmar si "fee" debe ir en negrita.
+
+1.2  Etiqueta "Billing date" con un mes como valor
+     Nodo:   6530:76365 / 6530:76366
+     Texto:  "Billing date" / "July 2026"
+     Revisar: el valor es un mes, no una fecha. En ES dice "Período de facturación".
+
+1.3  Terminología "fees" / "tariff"
+     Nodos y textos:
+       - 6530:76400  "Check related tariff changes"
+       - 6566:89209  "Need help understanding these fees?"
+     Revisar: el resto del correo dice "fee". Confirmar si "tariff" es intencional.
+
+
+2. FUENTES DISTINTAS DE ARIAL
+-----------------------------
+Ninguna. Todos los textos visibles están en Arial.
+
+
+3. DIFERENCIAS CON FIGMA
+------------------------
+Ninguna. El alto total coincide con Figma (1432px) con 1px de diferencia como máximo.
+
+
+4. SUGERENCIAS DE MAQUETADOR NO APLICADAS (quedaron como en Figma)
+------------------------------------------------------------------
+4.1  Tarjetas "Recommended Actions": la primera separa ícono y texto con 8px
+     (nodo 6530:76373) y las otras cuatro con 6px. Sugerencia: unificar en 8px.
+
+4.2  Botón "Review in incontrol" (6530:76367): texto #eef2fc sobre #fa573e tiene contraste
+     aprox. 2.9:1 (WCAG pide 4.5:1). Sugerencia: texto #ffffff.
+
+4.3  Franja "Learn more at incontrol.intelica.com" (6566:89122): line-height 8px con texto
+     de 12px; Outlook de escritorio puede recortar el texto. Sugerencia: line-height 16px
+     (la franja mantiene 75px de alto).
+
+
+5. LINKS
+--------
+Pendientes para el desarrollador (href="#"):
+  - Botón "Review in incontrol"
+  - "Update your preferences"
+  - "unsubscribe"
+
+Enlaces creados con la misma apariencia del texto:
+  - incontrol.intelica.com      -> https://incontrol.intelica.com
+  - clientsuccess@intelica.com  -> mailto:clientsuccess@intelica.com
+  - Logo incontrol              -> https://incontrol.intelica.com/login (como en las referencias; no viene en Figma)
+
+
+6. VARIABLES Y DATOS DE EJEMPLO
+-------------------------------
+Variables copiadas tal cual de Figma (las reemplaza el desarrollador):
+  {{data.firstName}}, {{FeeCode}}, {{FeeName}}, {{fee.name}}, {{increases more than 15%}}
+  Ojo: usan estilos distintos (data.firstName, FeeCode, fee.name) y
+  "{{increases more than 15%}}" parece texto de ejemplo más que un nombre de variable.
+  Confirmar con el desarrollador.
+
+Valores de la tabla de datos ("CRB001", "[Bank Name]", "Mastercard", "Amount increased",
+"+15%", "+28%", "July 2026"): datos de muestra que reemplaza el desarrollador.

@@ -1,0 +1,28 @@
+Mailing: security-account-locked
+Idioma: EN
+Figma: https://www.figma.com/design/kqQqyK8uUEKv69JfVi0YBr/Login?node-id=956-16647
+Fecha: 2026-11-27
+
+1. Erratas y textos a revisar
+-----------------------------
+- Nodo I956:16754;16545:51473 (hyperlink): el texto es "Contact support " con un espacio al final; en Figma el subrayado se extiende sobre ese espacio. Revisar.
+- Nodo 956:16802: la variable {UnlockDate} viene escrita en el diseño (se copia tal cual, en negrita); en los demás mailings la fecha va como dato de ejemplo. Unificar el criterio.
+
+2. Fuentes distintas de Arial
+-----------------------------
+- Nodo 1330:15545 (texto legal del pie): en Figma está en Lato (Bold/Regular 10/12). Maquetado en Arial con el pie de ref/.
+
+3. Diferencias con Figma
+------------------------
+- Pie de página: por pedido se usa el pie de ref/ en todos los mailings (texto #4f5470, link security@intelica.com #2952c4, logo Intelica 54×32 y www.intelica.com #2952c4 en negrita). En Figma el pie va en #0a1733, link #21409a, logo 72×43 y www.intelica.com #0a1733: el render queda ~12px más bajo que Figma por el logo más chico.
+
+4. Sugerencias de maquetador no aplicadas
+-----------------------------------------
+- Quitar el espacio final de "Contact support " (no aprobado: el texto queda como en Figma; en el navegador el espacio final del link no se ve).
+
+5. Links pendientes para el dev y enlaces creados
+-------------------------------------------------
+- Link de soporte → mailto:support@intelica.com (como en ref/ y en la maqueta anterior).
+- Logo de incontrol → https://incontrol.intelica.com/login (target="_blank"), como en ref/.
+- security@intelica.com → mailto:security@intelica.com.
+- www.intelica.com → https://www.intelica.com (target="_blank").

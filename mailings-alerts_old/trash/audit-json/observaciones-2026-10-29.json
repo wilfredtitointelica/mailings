@@ -1,0 +1,530 @@
+{
+	"titulo": "Mailings de alertas",
+	"fecha": "29 de octubre de 2026",
+	"erratas": [
+		"healps",
+		"oput-out",
+		"wether"
+	],
+	"mailings": [
+		{
+			"nombre": "alert-newFees",
+			"descripcion": "Aviso de nuevas cuotas facturadas por primera vez.",
+			"en": {
+				"figma": "https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6528-79169",
+				"items": [
+					{
+						"prioridad": "corregir",
+						"donde": "Mensaje principal",
+						"nodo": "6528:79178",
+						"actual": "\"We've {{#}} new fee codes were billed in your latest invoices for the first time.\"",
+						"revisar": "La frase está mal construida: \"We've\" y \"were billed\" no concuerdan.",
+						"objetivo": "new fee codes"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Recuadro azul",
+						"nodo": "6528:79451",
+						"actual": "\"...stay  up to date with brand changes.\"",
+						"revisar": "Hay dos espacios entre \"stay\" y \"up\".",
+						"objetivo": "up to date with brand changes"
+					}
+				]
+			},
+			"es": {
+				"figma": "https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6539-91887",
+				"items": [
+					{
+						"prioridad": "revisar",
+						"donde": "Botón",
+						"nodo": "6539:94063",
+						"actual": "\"Revisar en Incontrol\"",
+						"revisar": "\"Incontrol\" va con mayúscula; en el resto del correo va en minúscula.",
+						"objetivo": "Revisar en Incontrol"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Ayuda y cabecera de tablas",
+						"nodo": "6566:89213 · 6587:89646",
+						"actual": "\"...estas tarifas?\" / \"Información sobre tarifas\"",
+						"revisar": "Dice \"tarifas\" donde el resto del correo dice \"cuotas\".",
+						"objetivo": "Información sobre tarifas"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Filas de las tablas",
+						"nodo": "6587:89653",
+						"actual": "\"Fee code: 5C2136017 | Entity: ...\"",
+						"revisar": "\"Fee code\" y \"Entity\" siguen en inglés. ¿Se traducen?",
+						"objetivo": "Fee code: 5C2136017"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Franja oscura",
+						"nodo": "6566:89130",
+						"actual": "\"Conoce más en incontrol.intelica.com\"",
+						"revisar": "Trata de \"tú\"; el resto del correo trata de \"usted\".",
+						"objetivo": "Conoce más en"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Pie del correo",
+						"nodo": "6566:89132",
+						"actual": "\"Ver en el browser\"",
+						"revisar": "\"browser\" está en inglés.",
+						"objetivo": "Ver en el browser"
+					},
+					{
+						"prioridad": "fuente",
+						"donde": "Franja oscura",
+						"nodo": "6566:89130",
+						"actual": "\"Conoce más en incontrol.intelica.com\"",
+						"revisar": "Usa la fuente Inter; el correo usa Arial. Se maquetó en Arial.",
+						"objetivo": "Conoce más en"
+					}
+				]
+			}
+		},
+		{
+			"nombre": "alert-penalties",
+			"descripcion": "Aviso de penalidades facturadas.",
+			"en": {
+				"figma": "https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6529-86035",
+				"items": [
+					{
+						"prioridad": "corregido",
+						"donde": "Párrafos de \"What happened?\"",
+						"nodo": "6529:86273",
+						"actual": "\"Reviewing them early healps identify...\"",
+						"revisar": "\"healps\" → \"helps\". Ya está corregido en el correo; falta corregirlo en Figma.",
+						"objetivo": "Reviewing them early helps"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Mensaje principal",
+						"nodo": "6529:86044",
+						"actual": "\"{{#}}  scheme penalties have been billed...\"",
+						"revisar": "Hay dos espacios después de \"{{#}}\".",
+						"objetivo": "scheme penalties"
+					}
+				]
+			},
+			"es": {
+				"figma": "https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6539-96232",
+				"items": [
+					{
+						"prioridad": "corregir",
+						"donde": "Tabla resumen",
+						"nodo": "6545:81797",
+						"actual": "\"Nuevas cuotas\"",
+						"revisar": "Es el texto del correo de nuevas cuotas. En inglés dice \"Penalties\".",
+						"objetivo": "Nuevas cuotas"
+					},
+					{
+						"prioridad": "corregir",
+						"donde": "Título de acciones",
+						"nodo": "6539:97223",
+						"actual": "\"Recommended Actions\"",
+						"revisar": "Está sin traducir.",
+						"objetivo": "Recommended Actions"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Primer párrafo y ayuda",
+						"nodo": "6539:96470 · 6566:89217",
+						"actual": "\"...penalizaciones... penalidades\" / \"...estas tarifas?\"",
+						"revisar": "Se mezclan \"penalizaciones\", \"penalidades\" y \"tarifas\" para hablar de lo mismo.",
+						"objetivo": "siguientes penalizaciones"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Mensaje principal",
+						"nodo": "6539:96241",
+						"actual": "\"{{#}}  esquemas de penalidades...\"",
+						"revisar": "Hay dos espacios después de \"{{#}}\".",
+						"objetivo": "esquemas de penalidades"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Filas de las tablas",
+						"nodo": "6585:88684",
+						"actual": "\"Fee code: 5C2136017 | Entity: ...\"",
+						"revisar": "\"Fee code\" y \"Entity\" siguen en inglés. ¿Se traducen?",
+						"objetivo": "Fee code: 5C2136017"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Tarjeta y franja oscura",
+						"nodo": "6539:96481 · 6566:89138",
+						"actual": "\"Consulta el motivo...\" / \"Conoce más en...\"",
+						"revisar": "Tratan de \"tú\"; el resto del correo trata de \"usted\".",
+						"objetivo": "Consulta el motivo"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Pie del correo",
+						"nodo": "6566:89140",
+						"actual": "\"Ver en el browser\"",
+						"revisar": "\"browser\" está en inglés.",
+						"objetivo": "Ver en el browser"
+					},
+					{
+						"prioridad": "fuente",
+						"donde": "Cabeceras de tablas y franja",
+						"nodo": "6545:81797 · 6585:88605 · 6566:89138",
+						"actual": "Cabeceras de tablas / \"Conoce más en...\"",
+						"revisar": "Las cabeceras usan Lato y la franja Inter; el correo usa Arial. Se maquetó en Arial.",
+						"objetivo": "Información sobre tarifas"
+					}
+				]
+			}
+		},
+		{
+			"nombre": "alerts-optOut-freeTrial",
+			"descripcion": "Aviso de que empieza el periodo de prueba de un servicio opt-out.",
+			"en": {
+				"figma": "https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6530-97467",
+				"items": [
+					{
+						"prioridad": "corregir",
+						"donde": "Título",
+						"nodo": "6530:97473",
+						"actual": "\"We found new ways to save\"",
+						"revisar": "No coincide con el título en español (\"Alerta de Servicios Opt-Out\") y parece de otro correo.",
+						"objetivo": "We found new ways to save"
+					},
+					{
+						"prioridad": "corregir",
+						"donde": "Párrafo de \"What happened?\"",
+						"nodo": "6530:97500",
+						"actual": "\"...the new oput-out service...\"",
+						"revisar": "Falta de ortografía: \"oput-out\" → \"opt-out\".",
+						"objetivo": "oput-out"
+					},
+					{
+						"prioridad": "corregir",
+						"donde": "Párrafo de \"What happened?\"",
+						"nodo": "6530:97500",
+						"actual": "\"...decide wether you wish...\"",
+						"revisar": "Falta de ortografía: \"wether\" → \"whether\".",
+						"objetivo": "wether"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Línea de tiempo y párrafos",
+						"nodo": "6556:81654 · 6530:97503",
+						"actual": "\"Last day to Opt-Out\" / \"...the opt-out deadline...\"",
+						"revisar": "Se escribe \"Opt-Out\" y \"opt-out\". Unificar.",
+						"objetivo": "Last day to Opt-Out"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Ayuda",
+						"nodo": "6566:89193",
+						"actual": "\"Need help understanding these fees?\"",
+						"revisar": "Es el texto del correo de nuevas cuotas; este correo habla de un servicio opt-out.",
+						"objetivo": "Need help understanding these fees?"
+					}
+				]
+			},
+			"es": {
+				"figma": "https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6539-99010",
+				"items": [
+					{
+						"prioridad": "corregir",
+						"donde": "Título",
+						"nodo": "6539:99016",
+						"actual": "\"Alerta de Servicios Opt-Out\"",
+						"revisar": "No coincide con el título en inglés (\"We found new ways to save\").",
+						"objetivo": "Alerta de Servicios Opt-Out"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Varios lugares",
+						"nodo": "6539:99016 · 6539:99043 · 6556:81732 · 6539:99046",
+						"actual": "\"Opt-Out\" / \"opción de exclusión\" / \"desuscribirse\" / \"darse de baja\"",
+						"revisar": "El mismo concepto aparece de 4 formas distintas.",
+						"objetivo": "opción de exclusión"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Línea de tiempo y párrafo",
+						"nodo": "6556:81723 · 6539:99043",
+						"actual": "\"periodo\" / \"período\"",
+						"revisar": "Las dos formas son correctas; usar una sola.",
+						"objetivo": "Comienza el periodo de"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Tabla del servicio",
+						"nodo": "6539:100786",
+						"actual": "\"...en el programa Fraud Reporting and Control Program...\"",
+						"revisar": "Repite \"programa\". ¿El nombre se deja en inglés?",
+						"objetivo": "Fraud Reporting and Control Program"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Ilustración y franja oscura",
+						"nodo": "6539:99048 · 6566:89146",
+						"actual": "\"Revisa tus Opt-Outs activos\" / \"Conoce más en...\"",
+						"revisar": "Tratan de \"tú\"; el resto del correo trata de \"usted\". Los textos de la ilustración están dentro de la imagen.",
+						"objetivo": {
+							"img": "e-optout-dashboard"
+						}
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Ayuda",
+						"nodo": "6566:89221",
+						"actual": "\"¿Necesita ayuda para comprender estas tarifas?\"",
+						"revisar": "Es el texto del correo de nuevas cuotas.",
+						"objetivo": "estas tarifas"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Pie del correo",
+						"nodo": "6566:89148",
+						"actual": "\"Ver en el browser\"",
+						"revisar": "\"browser\" está en inglés.",
+						"objetivo": "Ver en el browser"
+					}
+				]
+			}
+		},
+		{
+			"nombre": "alerts-optOut-lastDay",
+			"descripcion": "Aviso de último día para darse de baja antes del cobro.",
+			"aviso": "Este diseño es igual al de alerts-optOut-freeTrial: solo cambia el punto naranja de la línea de tiempo (ahora en \"Último día\"). Título y párrafos siguen hablando del periodo de prueba.",
+			"en": {
+				"figma": "https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6530-92138",
+				"items": [
+					{
+						"prioridad": "corregir",
+						"donde": "Título y párrafos",
+						"nodo": "6530:92144 · 6530:92171 · 6530:92174",
+						"actual": "\"We found new ways to save\" / \"The free trial period ... is about to begin...\"",
+						"revisar": "Son los textos del aviso de periodo de prueba. Confirmar los textos de este correo.",
+						"objetivo": "We found new ways to save"
+					},
+					{
+						"prioridad": "corregir",
+						"donde": "Párrafo de \"What happened?\"",
+						"nodo": "6530:92171",
+						"actual": "\"...oput-out...\" / \"...wether...\"",
+						"revisar": "Faltas de ortografía: \"oput-out\" → \"opt-out\" y \"wether\" → \"whether\".",
+						"objetivo": "oput-out"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Párrafo de \"What happened?\"",
+						"nodo": "6530:92171",
+						"actual": "\"...decide wether you wish to unsubscribe\"",
+						"revisar": "Falta el punto final.",
+						"objetivo": "you wish to unsubscribe"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Línea de tiempo y párrafos",
+						"nodo": "6556:81702 · 6530:92174",
+						"actual": "\"Last day to Opt-Out\" / \"...the opt-out deadline...\"",
+						"revisar": "Se escribe \"Opt-Out\" y \"opt-out\". Unificar.",
+						"objetivo": "Last day to Opt-Out"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Ayuda",
+						"nodo": "6566:89197",
+						"actual": "\"Need help understanding these fees?\"",
+						"revisar": "Es el texto del correo de nuevas cuotas.",
+						"objetivo": "Need help understanding these fees?"
+					}
+				]
+			},
+			"es": {
+				"figma": "https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6539-106065",
+				"items": [
+					{
+						"prioridad": "corregir",
+						"donde": "Título y párrafos",
+						"nodo": "6539:106071 · 6539:109561 · 6539:109557",
+						"actual": "\"Alerta de Servicios Opt-Out\" / \"El período de prueba gratuito ... está por comenzar...\"",
+						"revisar": "Son los textos del aviso de periodo de prueba. Confirmar los textos de este correo. El título además no coincide con el inglés.",
+						"objetivo": "Alerta de Servicios Opt-Out"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Varios lugares",
+						"nodo": "6539:106071 · 6539:109561 · 6556:81762 · 6539:109557",
+						"actual": "\"Opt-Out\" / \"opción de exclusión\" / \"desuscribirse\" / \"darse de baja\"",
+						"revisar": "El mismo concepto aparece de 4 formas distintas.",
+						"objetivo": "opción de exclusión"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Línea de tiempo y párrafo",
+						"nodo": "6556:81753 · 6539:109561",
+						"actual": "\"periodo\" / \"período\"",
+						"revisar": "Las dos formas son correctas; usar una sola.",
+						"objetivo": "Comienza el periodo de"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Tabla del servicio",
+						"nodo": "6539:109570",
+						"actual": "\"...en el programa Fraud Reporting and Control Program...\"",
+						"revisar": "Repite \"programa\". ¿El nombre se deja en inglés?",
+						"objetivo": "Fraud Reporting and Control Program"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Ilustración y franja oscura",
+						"nodo": "6566:92802 · 6566:89154",
+						"actual": "\"Revisa tus Opt-Outs activos\" / \"Conoce más en...\"",
+						"revisar": "Tratan de \"tú\"; el resto del correo trata de \"usted\".",
+						"objetivo": {
+							"img": "e-optout-dashboard"
+						}
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Ayuda",
+						"nodo": "6566:89225",
+						"actual": "\"¿Necesita ayuda para comprender estas tarifas?\"",
+						"revisar": "Es el texto del correo de nuevas cuotas.",
+						"objetivo": "estas tarifas"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Pie del correo",
+						"nodo": "6566:89156",
+						"actual": "\"Ver en el browser\"",
+						"revisar": "\"browser\" está en inglés.",
+						"objetivo": "Ver en el browser"
+					}
+				]
+			}
+		},
+		{
+			"nombre": "alert-custom",
+			"descripcion": "Aviso de que se activó una alerta personalizada.",
+			"en": {
+				"figma": "https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6530-76336",
+				"items": [
+					{
+						"prioridad": "revisar",
+						"donde": "Saludo",
+						"nodo": "6530:76346",
+						"actual": "\"Hi {{data.firstName}}\"",
+						"revisar": "Sin coma; en español sí lleva (\"Hola, ...\").",
+						"objetivo": "Hi {{data.firstName}}"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Primer párrafo",
+						"nodo": "6530:76347",
+						"actual": "\"The monitored fee {{FeeCode}} - {{FeeName}}...\"",
+						"revisar": "La palabra \"fee\" va en negrita; en español solo van en negrita los datos.",
+						"objetivo": "fee {{FeeCode}} - {{FeeName}}"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Tabla de datos",
+						"nodo": "6530:76365",
+						"actual": "\"Billing Date\" → \"July 2026\"",
+						"revisar": "Dice \"fecha\" pero el valor es un mes. En español dice \"Período de facturación\".",
+						"objetivo": "Billing Date"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Tabla de datos",
+						"nodo": "6530:76348",
+						"actual": "\"Fee code\" / \"Configured Threshold\" / \"Current Value\"",
+						"revisar": "Mayúsculas distintas entre etiquetas. Unificar.",
+						"objetivo": "Configured Threshold"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Tarjeta y ayuda",
+						"nodo": "6530:76400 · 6566:89209",
+						"actual": "\"Check related tariff changes\" / \"...these fees?\"",
+						"revisar": "Se usa \"tariff\" y \"fee\" para lo mismo.",
+						"objetivo": "Check related tariff changes"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "\"Why did I receive this?\"",
+						"nodo": "6530:76370",
+						"actual": "\"Notify me when {{fee.name}}  {{increases more than 15%}}...\"",
+						"revisar": "Hay dos espacios entre los dos datos.",
+						"objetivo": "{{increases more than 15%}}"
+					}
+				]
+			},
+			"es": {
+				"figma": "https://www.figma.com/design/NN42hJRMdArbNyDxMaMzEE/Alerts?node-id=6539-119552",
+				"items": [
+					{
+						"prioridad": "revisar",
+						"donde": "Varios lugares",
+						"nodo": "6539:119563 · 6539:119709 · 6539:119616 · 6566:89237",
+						"actual": "\"cuota monitoreada\" / \"Código de cuota\" / \"tarifas\"",
+						"revisar": "Se usa \"cuota\" y \"tarifa\" para lo mismo.",
+						"objetivo": "La cuota monitoreada"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "\"¿Por qué recibí esta alerta?\" y tabla",
+						"nodo": "6539:119586 · 6539:119719",
+						"actual": "\"{{aumente más del 15 %}}\" / \"+15%\"",
+						"revisar": "El porcentaje se escribe con y sin espacio. Unificar.",
+						"objetivo": "{{aumente más del 15 %}}"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Franja oscura",
+						"nodo": "6566:89178",
+						"actual": "\"Conoce más en incontrol.intelica.com\"",
+						"revisar": "Trata de \"tú\"; el resto del correo trata de \"usted\".",
+						"objetivo": "Conoce más en"
+					},
+					{
+						"prioridad": "revisar",
+						"donde": "Pie del correo",
+						"nodo": "6566:89180",
+						"actual": "\"Ver en el browser\"",
+						"revisar": "\"browser\" está en inglés.",
+						"objetivo": "Ver en el browser"
+					}
+				]
+			}
+		}
+	],
+	"cierre": [
+		{
+			"titulo": "Se repite en varios correos",
+			"items": [
+				"**\"Ver en el browser\"** en el pie de todos los correos en español: \"browser\" está en inglés.",
+				"**\"Conoce más en incontrol.intelica.com\"** en la franja oscura de todos los correos en español: trata de \"tú\" y el resto trata de \"usted\".",
+				"**\"these fees\" / \"estas tarifas\"** aparece también en correos que no hablan de cuotas.",
+				"**\"cuotas\", \"tarifas\" y \"penalidades\"** se usan como sinónimos. Conviene definir un término para cada concepto."
+			]
+		},
+		{
+			"titulo": "Sugerencias de diseño (opcionales)",
+			"items": [
+				"**Texto del botón naranja:** el celeste claro sobre naranja se lee con dificultad (contraste 2,9:1; lo recomendado es 4,5:1). Propuesta: texto blanco.",
+				"**Franja oscura:** interlineado de 8px para texto de 12px; en Outlook de escritorio se puede cortar. Propuesta: 16px.",
+				"**Tarjetas con ícono:** la primera separa ícono y texto con 8px y las demás con 6px. Propuesta: 8px en todas."
+			]
+		},
+		{
+			"titulo": "A tener en cuenta",
+			"items": [
+				"**Outlook de escritorio para Windows** no muestra las imágenes .webp y ve las esquinas rectas.",
+				"**Links pendientes:** el botón, \"View email in browser\", \"Update your preferences\" y \"unsubscribe\" los completa desarrollo.",
+				"**Datos de ejemplo:** montos, bancos, fechas y códigos son de muestra.",
+				"**alert-custom:** \"{{increases more than 15%}}\" y \"{{aumente más del 15 %}}\" parecen texto de ejemplo. Confirmar con desarrollo."
+			]
+		}
+	]
+}
